@@ -1,0 +1,17 @@
+version: '3.9'
+
+services:
+  frontend:
+    build: ./BingoBlitz-FrontEnd
+    ports:
+      - "4000:80"
+
+  gameserver:
+    build: ./BingoBlitz-GameServer
+    ports:
+      - "4001:80"
+
+  communityhub:
+    build: ./BingoBlitz-CommunityHub
+    ports:
+      - "4002:80"
