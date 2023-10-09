@@ -183,7 +183,7 @@ Project Link: [https://github.com/MaikelHendrikx1/BingoBlitz](https://github.com
 [stars-url]: https://github.com/MaikelHendrikx1/BingoBlitz/stargazers
 [issues-shield]: https://img.shields.io/github/issues/MaikelHendrikx1/BingoBlitz.svg?style=for-the-badge
 [issues-url]: https://github.com/MaikelHendrikx1/BingoBlitz/issues
-[license-shield]: https://img.shields.io/github/license/MaikelHendrikx1/BingoBlitz.svg?style=for-the-badge
+[license-shield]: https://img.shields.io/badge/license-MIT-green?style=for-the-badge
 [license-url]: https://github.com/MaikelHendrikx1/BingoBlitz/blob/main/LICENSE
 [product-screenshot]: images/screenshot.png
 [Vue-url]: https://vuejs.org/ 
