@@ -156,7 +156,7 @@ Don't forget to give the project a star! Thanks again!
 <!-- LICENSE -->
 ## License
 
-Distributed under the UNSPECIFIED License. See `LICENSE.txt` for more information.
+Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -184,7 +184,7 @@ Project Link: [https://github.com/MaikelHendrikx1/BingoBlitz](https://github.com
 [issues-shield]: https://img.shields.io/github/issues/MaikelHendrikx1/BingoBlitz.svg?style=for-the-badge
 [issues-url]: https://github.com/MaikelHendrikx1/BingoBlitz/issues
 [license-shield]: https://img.shields.io/github/license/MaikelHendrikx1/BingoBlitz.svg?style=for-the-badge
-[license-url]: https://github.com/MaikelHendrikx1/BingoBlitz/blob/master/LICENSE.txt
+[license-url]: https://github.com/MaikelHendrikx1/BingoBlitz/blob/main/LICENSE
 [product-screenshot]: images/screenshot.png
 [Vue-url]: https://vuejs.org/ 
 [.NET-url]: https://dotnet.microsoft.com/en-us/
