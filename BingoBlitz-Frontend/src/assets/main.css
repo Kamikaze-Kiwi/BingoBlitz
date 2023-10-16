@@ -1,6 +1,68 @@
+:root {
+    --eerie: #1b2021ff;
+    --indian: #e65f5cff;
+    --ecru: #d0b17aff;
+    --glaucous: #7180acff;
+    --powder: #91b7c7ff;
+    --light: #cbd0d3;
+}
+
 .centerContentHorizontal {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+.centerContentVertical {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.centerCompletely {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+* {
+    color: inherit;
+}
+
+hr {
+    border: 0;
+    height: 2px;
+    background: var(--glaucous);
+    width: 100%;
+}
+
+*[tag="button"],
+button {
+    background: var(--indian);
+    color: black;
+    border: 0;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="tel"],
+input[type="number"],
+input[type="search"],
+input[type="url"] {
+    background: var(--light);
+    color: black;
+    border: 0;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 1.2rem;
 }
