@@ -15,3 +15,8 @@ services:
     build: ./BingoBlitz-CommunityHub
     ports:
       - "4002:80"
+
+  gameservice: 
+    build: ./BingoBlitz-GameService
+    ports:
+      - "4003:80"
