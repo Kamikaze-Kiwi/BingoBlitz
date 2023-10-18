@@ -1,3 +1,18 @@
+<script setup lang="ts">
+  import axios from 'axios';
+
+  function JoinGame(){
+    let code: string = (document.getElementById("JoinGameIdInput") as HTMLInputElement).value;
+    axios.post<string>('http://localhost:4001/Game?gameId=' + code)
+      .then(response => {
+        alert(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+    })
+  }
+</script>
+
 <template>
   <div class="container">
     <a class="title">Bingo Blitz</a>
@@ -13,19 +28,17 @@
           <a class="boxheader">Create a game</a>
           <a>Host a new game and invite your friends!</a>
           <hr>
-          <button class="alignBottom" type="button" style="margin-top: auto;">
-            <router-link to="/creategame" tag="button">Create</router-link>
-          </button>
+          <router-link to="/creategame" class="alignBottom" style="min-width: 40%; margin-top: auto;" tag="button">Create</router-link>
       </div>
 
       <!--Join a game-->
-      <div class="box">
+      <form class="box">
           <a class="boxheader">Join a game</a>
           <a>Join an existing game with a 6-character code!</a>
           <hr/>
-          <input type="text" placeholder="Enter code" maxlength="6">
-          <button class="alignBottom" type="button" style="margin-top: auto;">Join</button>
-      </div>
+          <input id="JoinGameIdInput" type="text" placeholder="Enter code" maxlength="6">
+          <button @click="JoinGame" class="alignBottom" type="button" style="margin-top: auto;">Join</button>
+      </form>
 
       <!--Browse the community hub-->
       <div class="box">
@@ -33,12 +46,8 @@
           <a>Use custom packs shared by the community, or create and share your own!</a>
           <hr/>
           <div style="display: flex; justify-content: space-evenly; margin-top: auto;">
-            <button class="alignBottom" type="button" style="min-width: 40%;">
-              <router-link to="/CommunityHub" tag="button">Browse</router-link>
-            </button>
-            <button class="alignBottom" type="button" style="min-width: 40%;">
-              <router-link to="/CommunityHub/create" tag="button">Create</router-link>
-            </button>
+            <router-link to="/CommunityHub" class="alignBottom" style="min-width: 40%;" tag="button">Browse</router-link>
+            <router-link to="/CommunityHub/create" class="alignBottom" style="min-width: 40%;" tag="button">Create</router-link>
           </div>
       </div>
 
