@@ -1,3 +1,5 @@
+using BingoBlitz_GameService;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -18,5 +20,8 @@ app.UseSwaggerUI();
 app.UseAuthorization();
 
 app.MapControllers();
+
+var receiver = new Receive();
+receiver.StartReceiving();
 
 app.Run();

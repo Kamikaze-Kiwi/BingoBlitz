@@ -20,3 +20,13 @@ services:
     build: ./BingoBlitz-GameService
     ports:
       - "4003:80"
+
+  rabbitmq:
+    image: rabbitmq:management
+    ports:
+        - 5672:5672
+        - 15672:15672
+    volumes:
+      - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+      - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    

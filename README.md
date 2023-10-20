@@ -124,6 +124,7 @@ Each part of this application can be ran in Docker. Before using Docker, ensure 
 
 * Running all services simultaneously using Docker-Compose.
   ```sh
+  docker-compose build
   docker-compose up
   ```
 

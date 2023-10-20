@@ -3,7 +3,7 @@
 
   function JoinGame(){
     let code: string = (document.getElementById("JoinGameIdInput") as HTMLInputElement).value;
-    axios.post<string>('http://localhost:4001/Game?gameId=' + code)
+    axios.post<string>('http://localhost:4001/api/game/join?gameId=' + code)
       .then(response => {
         alert(response.data);
       })

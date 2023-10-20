@@ -12,11 +12,5 @@ namespace BingoBlitz_GameService.Controllers
         {
             _logger = logger;
         }
-
-        [HttpPost(Name = "SaveGame")]
-        public string JoinGame(string gameData)
-        {
-            return $"Succesfully saved the game.";
-        }
     }
 }
