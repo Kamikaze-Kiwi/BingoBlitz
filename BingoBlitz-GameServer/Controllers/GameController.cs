@@ -28,22 +28,25 @@ namespace BingoBlitz_GameServer.Controllers
         [Route("save")]
         public string SaveGame(string gameData)
         {
-            var factory = new ConnectionFactory();
-            factory.UserName = "guest";
-            factory.Password = "guest";
-            factory.VirtualHost = "/";
-            factory.HostName = "rabbitmq";
-            factory.Port = 5672;
-            using var connection = factory.CreateConnection();
-            using var channel = connection.CreateModel();
+            ConnectionFactory factory = new()
+            {
+                UserName = "guest",
+                Password = "guest",
+                VirtualHost = "/",
+                HostName = "rabbitmq",
+                Port = 5672
+            };
+
+            using IConnection connection = factory.CreateConnection();
+            using IModel channel = connection.CreateModel();
 
             channel.QueueDeclare(queue: "game_data",
-            durable: false,
-            exclusive: false,
-            autoDelete: false,
-            arguments: null);
+                durable: false,
+                exclusive: false,
+                autoDelete: false,
+                arguments: null);
 
-            var body = Encoding.UTF8.GetBytes(gameData);
+            byte[] body = Encoding.UTF8.GetBytes(gameData);
 
             channel.BasicPublish(exchange: "",
                 routingKey: "game_data",

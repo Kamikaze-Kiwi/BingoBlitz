@@ -8,22 +8,26 @@ namespace BingoBlitz_GameService
     {
         public void StartReceiving()
         {
-            var factory = new ConnectionFactory();
-            factory.UserName = "guest";
-            factory.Password = "guest";
-            factory.VirtualHost = "/";
-            factory.HostName = "rabbitmq";
-            factory.Port = 5672;
-            var connection = factory.CreateConnection();
-            var channel = connection.CreateModel();
+            ConnectionFactory factory = new()
+            {
+                UserName = "guest",
+                Password = "guest",
+                VirtualHost = "/",
+                HostName = "rabbitmq",
+                Port = 5672
+            };
 
-            channel.QueueDeclare(queue: "game_data",
-                                 durable: false,
-                                 exclusive: false,
-                                 autoDelete: false,
-                                 arguments: null);
-                
-            var consumer = new EventingBasicConsumer(channel);
+            using IConnection connection = factory.CreateConnection();
+            using IModel channel = connection.CreateModel();
+
+            channel.QueueDeclare(
+                queue: "game_data",
+                durable: false,
+                exclusive: false,
+                autoDelete: false,
+                arguments: null);
+
+            EventingBasicConsumer consumer = new(channel);
 
             consumer.Received += (model, ea) =>
             {

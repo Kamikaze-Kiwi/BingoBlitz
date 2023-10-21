@@ -7,7 +7,7 @@
   GetItems(0, 10);
 
   function GetItems(start: number, amount: number) {
-    axios.get<string[]>('http://localhost:4002/Card?start=' + start + '&amount=' + amount)
+    axios.get<string[]>('http://localhost:4002/api/cards/get?start=' + start + '&amount=' + amount)
       .then(response => {
         items.value = response.data;
       })
