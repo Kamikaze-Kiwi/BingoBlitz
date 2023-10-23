@@ -32,8 +32,6 @@ Connector connector = new(
     port: rabbitMQ.GetValue<int>("Port")
 );
 
-Task connectToRabbitMqTask = connector.ContinuouslyConnect(1000);
-
 GameDataReceiver gameDataReceiver = new(connector);
 
 app.Run();

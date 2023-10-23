@@ -1,3 +1,4 @@
+using BingoBlitz_GameService;
 using Microsoft.AspNetCore.Mvc;
 using RabbitMQ.Client;
 using System.Text;
@@ -9,10 +10,12 @@ namespace BingoBlitz_GameServer.Controllers
     public class GameController : ControllerBase
     {
         private readonly ILogger<GameController> _logger;
+        private readonly Connector _connector;
 
-        public GameController(ILogger<GameController> logger)
+        public GameController(ILogger<GameController> logger, Connector connector)
         {
             _logger = logger;
+            _connector = connector;
         }
 
         [HttpPost]
@@ -26,19 +29,14 @@ namespace BingoBlitz_GameServer.Controllers
 
         [HttpPost]
         [Route("save")]
-        public string SaveGame(string gameData)
+        public ActionResult<string> SaveGame(string gameData)
         {
-            ConnectionFactory factory = new()
+            if (_connector == null || _connector.Connection == null || !_connector.Connection.IsOpen)
             {
-                UserName = "guest",
-                Password = "guest",
-                VirtualHost = "/",
-                HostName = "rabbitmq",
-                Port = 5672
-            };
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, "Service temporarily offline. Please try again later.");
+            }
 
-            using IConnection connection = factory.CreateConnection();
-            using IModel channel = connection.CreateModel();
+            using IModel channel = _connector.Connection.CreateModel();
 
             channel.QueueDeclare(queue: "game_data",
                 durable: false,
@@ -53,7 +51,7 @@ namespace BingoBlitz_GameServer.Controllers
                 basicProperties: null,
                 body: body);
 
-            return $"Game data saved: {gameData}";
+            return StatusCode(StatusCodes.Status202Accepted, "Game data has been accepted and is being handled.");
         }
     }
 }
