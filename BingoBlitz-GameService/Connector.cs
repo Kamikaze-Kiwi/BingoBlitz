@@ -70,6 +70,8 @@ namespace BingoBlitz_GameService
 
         private void ConnectionShutdown(object? sender, ShutdownEventArgs e)
         {
+            Connection?.Abort();
+            Connection = null;
             Console.WriteLine($"The connection was shut down. Reason: {e.ReplyText}");
 
             _ = ContinuouslyConnect(1000);
