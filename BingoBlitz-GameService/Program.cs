@@ -21,7 +21,19 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-var receiver = new Receive();
-receiver.StartReceiving();
+
+IConfigurationSection rabbitMQ = app.Configuration.GetRequiredSection("RabbitMQ");
+
+Connector connector = new(
+    userName: rabbitMQ.GetValue<string>("UserName"),
+    password: rabbitMQ.GetValue<string>("Password"),
+    virtualHost: rabbitMQ.GetValue<string>("VirtualHost"),
+    hostName: rabbitMQ.GetValue<string>("HostName"),
+    port: rabbitMQ.GetValue<int>("Port")
+);
+
+Task connectToRabbitMqTask = connector.ContinuouslyConnect(1000);
+
+GameDataReceiver gameDataReceiver = new(connector);
 
 app.Run();
