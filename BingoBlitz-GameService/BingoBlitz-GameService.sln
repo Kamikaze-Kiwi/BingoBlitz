@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BingoBlitz-GameService", "BingoBlitz-GameService.csproj", "{BA1E25D9-14FE-4912-9FAB-FEF19805E145}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameService-API", "GameServiceAPI\GameService-API.csproj", "{EA6D260B-5980-4618-8484-A7DC9C3B8F11}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{BA1E25D9-14FE-4912-9FAB-FEF19805E145}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BA1E25D9-14FE-4912-9FAB-FEF19805E145}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BA1E25D9-14FE-4912-9FAB-FEF19805E145}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BA1E25D9-14FE-4912-9FAB-FEF19805E145}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA6D260B-5980-4618-8484-A7DC9C3B8F11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA6D260B-5980-4618-8484-A7DC9C3B8F11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA6D260B-5980-4618-8484-A7DC9C3B8F11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA6D260B-5980-4618-8484-A7DC9C3B8F11}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -7,17 +7,17 @@ services:
       - "4000:80"
 
   gameserver:
-    build: ./BingoBlitz-GameServer
+    build: ./BingoBlitz-GameServer/GameServerAPI
     ports:
       - "4001:80"
 
   communityhub:
-    build: ./BingoBlitz-CommunityHub
+    build: ./BingoBlitz-CommunityHub/CommunityHubAPI
     ports:
       - "4002:80"
 
   gameservice: 
-    build: ./BingoBlitz-GameService
+    build: ./BingoBlitz-GameService/GameServiceAPI
     ports:
       - "4003:80"
 

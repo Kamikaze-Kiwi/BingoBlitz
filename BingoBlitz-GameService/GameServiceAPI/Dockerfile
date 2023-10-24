@@ -6,16 +6,16 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["BingoBlitz-GameService.csproj", "."]
-RUN dotnet restore "./BingoBlitz-GameService.csproj"
+COPY ["GameService-API.csproj", "."]
+RUN dotnet restore "./GameService-API.csproj"
 COPY . .
 WORKDIR "/src/."
-RUN dotnet build "BingoBlitz-GameService.csproj" -c Release -o /app/build
+RUN dotnet build "GameService-API.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "BingoBlitz-GameService.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "GameService-API.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "BingoBlitz-GameService.dll"]
+ENTRYPOINT ["dotnet", "GameService-API.dll"]
