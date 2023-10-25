@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace BingoBlitz_CommunityHub.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/cards/")]
     public class CardController : ControllerBase
     {
         private readonly ILogger<CardController> _logger;
@@ -13,7 +13,8 @@ namespace BingoBlitz_CommunityHub.Controllers
             _logger = logger;
         }
 
-        [HttpGet(Name = "GetCards")]
+        [HttpGet]
+        [Route("get")]
         public List<string> GetCards(int start = 0, int amount = 10)
         {
             List<string> cards = new();

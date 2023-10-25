@@ -1,21 +1,29 @@
 <script setup lang="ts">
+  import { ref } from 'vue'
   import axios from 'axios';
 
-  axios.get('http://localhost:4002/Card?start=0&amount=10')
-    .catch(function (error) {
+  let items = ref([] as string[]);
+
+  GetItems(0, 10);
+
+  function GetItems(start: number, amount: number) {
+    axios.get<string[]>('http://localhost:4002/api/cards/get?start=' + start + '&amount=' + amount)
+      .then(response => {
+        items.value = response.data;
+      })
+      .catch(function (error) {
       console.log(error);
     })
-    .then(function (response) {
-      console.log(response);
-    });
+  }
 </script>
 
 <template>
-  <div class="centerContentHorizontal">
+  <div class="centerContentHorizontal" style="color: var(--light);">
     <h1>This is the community hub page</h1>
+    <RouterLink to="/">Return to home</RouterLink>
     <br>
-    <!-- <li v-for="item in items" :key="item.id">
-      {{ item.text }}
-    </li> -->
+      <a v-for="item in items">
+        {{ item }}
+      </a>
   </div>
 </template>

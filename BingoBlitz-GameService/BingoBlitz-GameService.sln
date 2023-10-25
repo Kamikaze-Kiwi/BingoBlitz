@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommunityHub-API", "CommunityHub-API\CommunityHub-API.csproj", "{5D7BF898-7A16-4B47-AA5C-A8DADFA0BFF8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameService-API", "GameServiceAPI\GameService-API.csproj", "{EA6D260B-5980-4618-8484-A7DC9C3B8F11}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{5D7BF898-7A16-4B47-AA5C-A8DADFA0BFF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5D7BF898-7A16-4B47-AA5C-A8DADFA0BFF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5D7BF898-7A16-4B47-AA5C-A8DADFA0BFF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5D7BF898-7A16-4B47-AA5C-A8DADFA0BFF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA6D260B-5980-4618-8484-A7DC9C3B8F11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA6D260B-5980-4618-8484-A7DC9C3B8F11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA6D260B-5980-4618-8484-A7DC9C3B8F11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA6D260B-5980-4618-8484-A7DC9C3B8F11}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {1A18813D-578D-4679-8922-B5D93B0563B3}
+		SolutionGuid = {3C469930-F385-4AA2-898B-34DBF5F930FF}
 	EndGlobalSection
 EndGlobal

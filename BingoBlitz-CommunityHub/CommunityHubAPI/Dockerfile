@@ -6,16 +6,16 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["BingoBlitz-CommunityHub.csproj", "."]
-RUN dotnet restore "./BingoBlitz-CommunityHub.csproj"
+COPY ["CommunityHub-API.csproj", "."]
+RUN dotnet restore "./CommunityHub-API.csproj"
 COPY . .
 WORKDIR "/src/."
-RUN dotnet build "BingoBlitz-CommunityHub.csproj" -c Release -o /app/build
+RUN dotnet build "CommunityHub-API.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "BingoBlitz-CommunityHub.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "CommunityHub-API.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "BingoBlitz-CommunityHub.dll"]
+ENTRYPOINT ["dotnet", "CommunityHub-API.dll"]

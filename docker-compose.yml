@@ -7,11 +7,26 @@ services:
       - "4000:80"
 
   gameserver:
-    build: ./BingoBlitz-GameServer
+    build: ./BingoBlitz-GameServer/GameServerAPI
     ports:
       - "4001:80"
 
   communityhub:
-    build: ./BingoBlitz-CommunityHub
+    build: ./BingoBlitz-CommunityHub/CommunityHubAPI
     ports:
       - "4002:80"
+
+  gameservice: 
+    build: ./BingoBlitz-GameService/GameServiceAPI
+    ports:
+      - "4003:80"
+
+  rabbitmq:
+    image: rabbitmq:management
+    ports:
+        - 5672:5672
+        - 15672:15672
+    volumes:
+      - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+      - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    

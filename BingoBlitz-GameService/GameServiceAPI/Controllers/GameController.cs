@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace BingoBlitz_GameServer.Controllers
+namespace BingoBlitz_GameService.Controllers
 {
     [ApiController]
     [Route("[controller]")]
@@ -11,14 +11,6 @@ namespace BingoBlitz_GameServer.Controllers
         public GameController(ILogger<GameController> logger)
         {
             _logger = logger;
-        }
-
-        [HttpPost(Name = "JoinGame")]
-        public string JoinGame(string gameId)
-        {
-            if (gameId.Length != 6) return "No game found with the supplied code";
-
-            return $"Joined game with ID {gameId}";
         }
     }
 }
