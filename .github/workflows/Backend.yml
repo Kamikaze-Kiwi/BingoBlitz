@@ -32,8 +32,8 @@ jobs:
       with:
         dotnet-version: 6.0.x
 
-    - name: Build and Test CommunityServer
-      working-directory: ./BingoBlitz-CommunityServer
+    - name: Build and Test CommunityHub
+      working-directory: ./BingoBlitz-CommunityHub
       run: |
         dotnet restore
         dotnet build --no-restore
