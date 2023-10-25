@@ -2,7 +2,7 @@ name: .NET
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "development" ]
   pull_request:
     branches: [ "main", "development" ]
 
@@ -28,7 +28,7 @@ jobs:
         dotnet build --no-restore
         dotnet test --no-build --verbosity normal
 
-    - name: Build and Test CommunityServer
+    - name: Build and Test CommunityHub
       working-directory: ./BingoBlitz-CommunityHub
       run: |
         dotnet restore
