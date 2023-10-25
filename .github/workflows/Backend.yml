@@ -20,8 +20,6 @@ jobs:
         dotnet restore
         dotnet build --no-restore
         dotnet test --no-build --verbosity normal
-      with:
-        dotnet-version: 6.0.x
 
     - name: Build and Test GameService
       working-directory: ./BingoBlitz-GameService
@@ -29,8 +27,6 @@ jobs:
         dotnet restore
         dotnet build --no-restore
         dotnet test --no-build --verbosity normal
-      with:
-        dotnet-version: 6.0.x
 
     - name: Build and Test CommunityHub
       working-directory: ./BingoBlitz-CommunityHub
@@ -38,5 +34,3 @@ jobs:
         dotnet restore
         dotnet build --no-restore
         dotnet test --no-build --verbosity normal
-      with:
-        dotnet-version: 6.0.x
