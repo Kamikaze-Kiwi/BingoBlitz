@@ -5,21 +5,25 @@ services:
     build: ./BingoBlitz-FrontEnd
     ports:
       - "4000:80"
+    image: frontend
 
   gameserver:
     build: ./BingoBlitz-GameServer/GameServerAPI
     ports:
       - "4001:80"
+    image: gameserver
 
   communityhub:
     build: ./BingoBlitz-CommunityHub/CommunityHubAPI
     ports:
       - "4002:80"
+    image: communityhub
 
   gameservice: 
     build: ./BingoBlitz-GameService/GameServiceAPI
     ports:
       - "4003:80"
+    image: gameservice
 
   rabbitmq:
     image: rabbitmq:management
