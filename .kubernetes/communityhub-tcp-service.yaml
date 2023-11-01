@@ -3,17 +3,20 @@ kind: Service
 metadata:
   annotations:
     kompose.cmd: C:\ProgramData\chocolatey\lib\kubernetes-kompose\tools\kompose.exe convert -f docker-compose.yml -o .kubernetes
+    kompose.image-pull-policy: Never
+    kompose.service.type: LoadBalancer
     kompose.version: 1.31.2 (a92241f79)
   creationTimestamp: null
   labels:
-    io.kompose.service: gameservice
-  name: gameservice
+    io.kompose.service: communityhub-tcp
+  name: communityhub-tcp
 spec:
   ports:
-    - name: "4003"
-      port: 4003
+    - name: "4002"
+      port: 4002
       targetPort: 80
   selector:
-    io.kompose.service: gameservice
+    io.kompose.service: communityhub
+  type: LoadBalancer
 status:
   loadBalancer: {}

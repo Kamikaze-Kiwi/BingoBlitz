@@ -6,24 +6,37 @@ services:
     ports:
       - "4000:80"
     image: frontend
+    labels:
+      kompose.service.type: LoadBalancer
+      kompose.image-pull-policy: "Never"
 
   gameserver:
     build: ./BingoBlitz-GameServer/GameServerAPI
     ports:
       - "4001:80"
     image: gameserver
+    labels:
+      kompose.service.type: LoadBalancer
+      kompose.image-pull-policy: "Never"
+    
 
   communityhub:
     build: ./BingoBlitz-CommunityHub/CommunityHubAPI
     ports:
       - "4002:80"
     image: communityhub
+    labels:
+      kompose.service.type: LoadBalancer
+      kompose.image-pull-policy: "Never"
 
   gameservice: 
     build: ./BingoBlitz-GameService/GameServiceAPI
     ports:
       - "4003:80"
     image: gameservice
+    labels:
+      kompose.service.type: LoadBalancer
+      kompose.image-pull-policy: "Never"
 
   rabbitmq:
     image: rabbitmq:management
@@ -33,4 +46,6 @@ services:
     volumes:
       - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
       - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    labels:
+      kompose.service.type: LoadBalancer
     

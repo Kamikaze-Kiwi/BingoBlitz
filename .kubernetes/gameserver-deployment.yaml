@@ -3,6 +3,8 @@ kind: Deployment
 metadata:
   annotations:
     kompose.cmd: C:\ProgramData\chocolatey\lib\kubernetes-kompose\tools\kompose.exe convert -f docker-compose.yml -o .kubernetes
+    kompose.image-pull-policy: Never
+    kompose.service.type: LoadBalancer
     kompose.version: 1.31.2 (a92241f79)
   creationTimestamp: null
   labels:
@@ -18,6 +20,8 @@ spec:
     metadata:
       annotations:
         kompose.cmd: C:\ProgramData\chocolatey\lib\kubernetes-kompose\tools\kompose.exe convert -f docker-compose.yml -o .kubernetes
+        kompose.image-pull-policy: Never
+        kompose.service.type: LoadBalancer
         kompose.version: 1.31.2 (a92241f79)
       creationTimestamp: null
       labels:
@@ -26,8 +30,8 @@ spec:
     spec:
       containers:
         - image: gameserver
-          name: gameserver
           imagePullPolicy: Never
+          name: gameserver
           ports:
             - containerPort: 80
               hostPort: 4001
