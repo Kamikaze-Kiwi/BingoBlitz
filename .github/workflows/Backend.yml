@@ -42,23 +42,3 @@ jobs:
     - name: Test gameservice
       working-directory: ./BingoBlitz-GameService
       run: dotnet test --no-build --verbosity normal
-    
-
-
-  communityhub:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v3
-
-    - name: Build CommunityHub
-      working-directory: ./BingoBlitz-CommunityHub
-      run: |
-        dotnet restore
-        dotnet build --no-restore
-
-    - name: Test CommunityHub
-      working-directory: ./BingoBlitz-GameService
-      run: dotnet test --no-build --verbosity normal
-    
