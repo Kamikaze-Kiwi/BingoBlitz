@@ -6,6 +6,9 @@
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
 
+<br/>
+
+[![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-black.svg)](https://sonarcloud.io/organizations/maikelhendrikx1/projects?view=leak)
 
 
 <!-- PROJECT LOGO -->
