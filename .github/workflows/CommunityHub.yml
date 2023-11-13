@@ -65,5 +65,6 @@ jobs:
         shell: powershell
         run: |
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"BingoBlitz-CommunityHub" /o:"maikelhendrikx1" /d:sonar.token="${{ secrets.SONAR_TOKEN_COMMUNITYHUB }}" /d:sonar.host.url="https://sonarcloud.io"
+          dotnet restore
           dotnet build --no-restore
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN_COMMUNITYHUB }}"
