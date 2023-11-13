@@ -2,35 +2,62 @@ name: .NET
 
 on:
   push:
-    branches: [ "main", "development" ]
+    branches: '**'
   pull_request:
-    branches: [ "main", "development" ]
+    branches: '**'
 
 jobs:
-  build:
+  gameserver:
 
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
 
-    - name: Build and Test GameServer
+    - name: Build gameserver
       working-directory: ./BingoBlitz-GameServer
       run: |
         dotnet restore
         dotnet build --no-restore
-        dotnet test --no-build --verbosity normal
 
-    - name: Build and Test GameService
+    - name: Test gameserver
+      working-directory: ./BingoBlitz-GameServer
+      run: dotnet test --no-build --verbosity normal
+
+
+
+  gameservice:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Build gameservice
       working-directory: ./BingoBlitz-GameService
       run: |
         dotnet restore
         dotnet build --no-restore
-        dotnet test --no-build --verbosity normal
 
-    - name: Build and Test CommunityHub
+    - name: Test gameservice
+      working-directory: ./BingoBlitz-GameService
+      run: dotnet test --no-build --verbosity normal
+    
+
+
+  communityhub:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Build CommunityHub
       working-directory: ./BingoBlitz-CommunityHub
       run: |
         dotnet restore
         dotnet build --no-restore
-        dotnet test --no-build --verbosity normal
+
+    - name: Test CommunityHub
+      working-directory: ./BingoBlitz-GameService
+      run: dotnet test --no-build --verbosity normal
