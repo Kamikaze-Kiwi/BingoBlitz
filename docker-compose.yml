@@ -25,6 +25,8 @@ services:
     ports:
       - "4002:80"
     image: communityhub
+    env_file:
+      - ./BingoBlitz-CommunityHub/CommunityHubAPI/.env
     labels:
       kompose.service.type: LoadBalancer
       kompose.image-pull-policy: "Never"

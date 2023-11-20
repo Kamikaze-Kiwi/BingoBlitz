@@ -1,19 +1,20 @@
 <script setup lang="ts">
   import { ref } from 'vue'
   import axios from 'axios';
+  import type ObjectiveCollection from '@/types/objectiveCollection';
 
-  let items = ref([] as string[]);
+  let items = ref([] as ObjectiveCollection[]);
 
-  GetItems(0, 10);
+  GetItems();
 
-  function GetItems(start: number, amount: number) {
-    axios.get<string[]>('http://localhost:4002/api/cards/get?start=' + start + '&amount=' + amount)
+  function GetItems() {
+    axios.get<ObjectiveCollection[]>('http://localhost:4002/api/objectives/collections/get')
       .then(response => {
         items.value = response.data;
       })
       .catch(function (error) {
       console.log(error);
-    })
+    });
   }
 </script>
 
@@ -22,8 +23,20 @@
     <h1>This is the community hub page</h1>
     <RouterLink to="/">Return to home</RouterLink>
     <br>
-      <a v-for="item in items">
-        {{ item }}
-      </a>
+      <ul>
+        <li v-for="item in items">
+          <details>
+            <summary> <b> {{ item.name }} </b>: {{ item.objectives.length }} objectives</summary>
+
+            <ul>
+              <li v-for="objective in item.objectives">
+                {{ objective.name }}
+              </li>
+            </ul>
+
+            <button>Start game with this collection.</button>
+          </details>
+        </li>
+      </ul>
   </div>
 </template>
