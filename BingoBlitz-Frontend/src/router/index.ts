@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import CommunityHubView from '../views/CommunityHubView.vue'
+import CreateObjectiveCollectionView from '../views/CreateObjectiveCollectionView.vue'
 import NotFoundView from '../views/NotFoundView.vue'
 
 const router = createRouter({
@@ -15,6 +16,11 @@ const router = createRouter({
       path: '/communityhub',
       name: 'communityhub',
       component: CommunityHubView
+    },
+    {
+      path: '/CommunityHub/create',
+      name: 'createobjectivecollection',
+      component: CreateObjectiveCollectionView
     },
     {
       path: '/:catchAll(.*)',
