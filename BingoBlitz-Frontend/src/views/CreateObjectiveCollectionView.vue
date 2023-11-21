@@ -6,48 +6,159 @@
 
     let objectiveCollection = ref({} as ObjectiveCollection);
     objectiveCollection.value.objectives = [];
+    objectiveCollection.value.objectives.push({} as Objective);
+
+    function ToggleObjective(event: Event){
+        let button: HTMLElement = event.target as HTMLElement;
+
+        button.parentElement?.parentElement?.parentElement?.querySelector(".objectiveToggleable")?.classList.toggle("hidden") ?? console.error("Failed to toggle objective");
+    }
 
     function AddObjective(){
         objectiveCollection.value.objectives.push({} as Objective);
     }
 
-    function SaveCollection(){
+    function RemoveObjective(index: number) {
+        if (objectiveCollection.value.objectives.length == 1){
+            alert("You can't remove the last objective!");
+            return;
+        }
 
+        objectiveCollection.value.objectives.splice(index, 1);
+    }
+
+    function SaveCollection(){
+        if (objectiveCollection.value.name == ""){
+            alert("You must give your collection a name!");
+            return;
+        }
+
+        if (objectiveCollection.value.objectives.length < 4){
+            alert("You must have at least 4 objectives!");
+            return;
+        }
+
+        console.log(objectiveCollection.value.name);
+        console.table(objectiveCollection.value.objectives);
+
+        //TODO: send to API to save
     }
 </script>
 
 
 
 <template>
-    <div class="formmain">
-        <label>
-            Collection name:
-            <input type="text" placeholder="Collection name" />
-        </label>
-
+    <div class="centerContentHorizontal" style="color: var(--light);">
+        <h1>This is the objective collection creation page</h1>
+        <RouterLink to="/">Return to home</RouterLink>
         <br/>
-        <br/>
-
-        <div v-for="objective in objectiveCollection.objectives">
-            <label>
-                Objective name:
-                <input type="text" placeholder="A short name..." maxlength="20" />
+        <div class="formWrapper centerContentHorizontal">
+            <label class="inputLabel">
+                Collection name:
+                <input type="text" placeholder="Collection name" v-model="objectiveCollection.name" />
             </label>
+
             <br/>
             <br/>
+
+            <div class="objectiveCollectionWrapper">
+                <div class="objectiveWrapper" v-for="objective in objectiveCollection.objectives">
+                    <div class="objectiveHeader">
+                        <b style="height: 100%;">{{ objectiveCollection.objectives.indexOf(objective) + 1 }}) {{ objective.name }}</b>
+                        <div class="buttonDrawer">
+                            <button style="margin-right: 10px;" v-on:click="ToggleObjective">Toggle</button>
+                            <button v-on:click="RemoveObjective(objectiveCollection.objectives.indexOf(objective))">Remove objective</button>
+                        </div>
+                    </div>
+
+                    <div class="objectiveToggleable">
+                        <hr>
+                        <div class="objectiveContent">
+                            <div>
+                                <label class="inputLabel">
+                                    Objective name:
+                                    <input type="text" placeholder="A short name..." maxlength="20" v-model="objective.name"/>
+                                </label>   
+
+                                <label class="inputLabel">
+                                    Objective icon:
+                                    <input type="text" placeholder="An emoji..." v-model="objective.thumbnailEmoji"/>
+                                </label>                                   
+                            </div>
+                            <div style="display: flex;">
+                                <label class="inputLabel">
+                                    Objective description:
+                                    <textarea v-model="objective.description"></textarea>
+                                </label>   
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <br/>
+
+            <button v-on:click="AddObjective">Add objective</button>
         </div>
 
-        <br/>
-
-        <button v-on:click="AddObjective">Add objective</button>
+        <button v-on:click="SaveCollection">Save collection</button>
     </div>
 </template>
 
 <style scoped>
-    .formmain {
+    .formWrapper {
+        margin: 20px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        color: white;
+    }
+
+    .objectiveWrapper {
+        margin: 20px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        color: black;
+        background-color: var(--ecru);
+    }
+
+    .objectiveHeader {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .buttonDrawer {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .objectiveToggleable {
+        overflow: hidden;
+        transition: max-height 0.5s ease-in-out;
+        max-height: 164px;
+    }
+
+    .hidden {
+        max-height: 0px;
+    }
+
+    .objectiveContent{
+        display: flex;
+        flex-direction: row;
+    }
+
+    .inputLabel{
         display: flex;
         flex-direction: column;
-        align-items: center;
-        color: white;
+        margin: 5px;
+        font-size: large;
+    }
+
+    textarea {
+        resize: none;
+        height: 100%;
     }
 </style>
