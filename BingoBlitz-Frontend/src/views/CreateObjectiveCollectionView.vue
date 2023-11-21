@@ -3,6 +3,8 @@
     import axios from 'axios';
     import type ObjectiveCollection from '@/types/objectiveCollection';
     import type Objective from '@/types/objective';
+    import EmojiPicker from 'vue3-emoji-picker'
+    import 'vue3-emoji-picker/css'
 
     let objectiveCollection = ref({} as ObjectiveCollection);
     objectiveCollection.value.objectives = [];
@@ -11,7 +13,30 @@
     function ToggleObjective(event: Event){
         let button: HTMLElement = event.target as HTMLElement;
 
-        button.parentElement?.parentElement?.parentElement?.querySelector(".objectiveToggleable")?.classList.toggle("hidden") ?? console.error("Failed to toggle objective");
+        button.parentElement?.parentElement?.parentElement?.querySelector(".objectiveToggleable")?.classList.toggle("hidden") 
+            ?? console.error("Failed to toggle objective");
+    }
+
+    function ShowIconPicker(event: Event){
+        document.getElementById("blocker")?.classList.add("blockspage");
+
+        let button: HTMLElement = event.target as HTMLElement;
+
+        button.parentElement?.querySelector(".iconpicker")?.classList.toggle("hidden") 
+            ?? console.error("Failed to toggle icon picker");
+    }
+
+    function OnSelectIcon(emoji: any, objective: Objective){
+        objective.thumbnailEmoji = emoji.i;
+        HideIconPicker();
+    }
+
+    function HideIconPicker(){
+        document.getElementById("blocker")?.classList.remove("blockspage");
+
+        Array.from(document.getElementsByClassName("iconpicker")).forEach((element: Element) => {
+            element.classList.add("hidden");
+        });
     }
 
     function AddObjective(){
@@ -48,6 +73,9 @@
 
 
 <template>
+    <!--Blocks any inputs in case a popup is showing, and closes the popup if the user presses outside the popup.-->
+    <div id="blocker" v-on:click="HideIconPicker"></div>
+    
     <div class="centerContentHorizontal" style="color: var(--light);">
         <h1>This is the objective collection creation page</h1>
         <RouterLink to="/">Return to home</RouterLink>
@@ -82,7 +110,14 @@
 
                                 <label class="inputLabel">
                                     Objective icon:
-                                    <input type="text" placeholder="An emoji..." v-model="objective.thumbnailEmoji"/>
+                                    <button v-on:click="ShowIconPicker" style="background-color: var(--light);">{{ objective.thumbnailEmoji ?? 'Click to pick icon.' }}</button>
+                                    <EmojiPicker @select="OnSelectIcon($event, objective)" class="iconpicker hidden" 
+                                        :native="true" 
+                                        :disable-skin-tones="true" 
+                                        :theme="'light'"
+                                        :mode="'prepend'"
+                                        :disabled-groups="['flags']"
+                                    />
                                 </label>                                   
                             </div>
                             <div style="display: flex;">
@@ -157,8 +192,26 @@
         font-size: large;
     }
 
+    .iconpicker{
+        position: absolute;
+        z-index: 2;
+    }
+
+    .iconpicker.hidden{
+        display: none;
+    }
+
     textarea {
         resize: none;
         height: 100%;
+    }
+
+    .blockspage {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100%;
+        z-index: 1;
     }
 </style>
