@@ -34,7 +34,7 @@ builder.Services.AddScoped<IObjectiveData, CosmosObjectiveData>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-app.UseCors(app => app.AllowAnyOrigin());
+app.UseCors(app => app.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
 app.UseSwagger();
 app.UseSwaggerUI();
