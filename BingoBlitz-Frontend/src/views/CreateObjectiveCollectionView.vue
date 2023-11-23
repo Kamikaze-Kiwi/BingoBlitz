@@ -11,39 +11,6 @@ objectiveCollection.value.name = "";
 objectiveCollection.value.objectives = [];
 AddObjective();
 
-objectiveCollection.value.objectives = [
-    {
-        "name": "Win a duel",
-        "description": "Win a 1v1 duel",
-        "thumbnailEmoji": "⚔️"
-    },
-    {
-        "name": "Get 5 country streak",
-        "description": "Play \"Country streak\" and guess 5 countries correctly in a row.",
-        "thumbnailEmoji": "5️⃣"
-    },
-    {
-        "name": "Get 0 points",
-        "description": "Get 0 points on any guess, in any gamemode.",
-        "thumbnailEmoji": "⭕"
-    },
-    {
-        "name": "See snow",
-        "description": "In any gamemode, see snow. It has to be actual snow (so for example, not in an advertisement or poster).",
-        "thumbnailEmoji": "❄️"
-    },
-    {
-        "name": "Get 20000+ points",
-        "description": "Get at least 20000 points in QuickPlay => medium",
-        "thumbnailEmoji": "🔝"
-    },
-    {
-        "name": "Cross a bridge",
-        "description": "In any gamemode, completely cross a bridge from on side to the other.",
-        "thumbnailEmoji": "🌉"
-    }
-];
-objectiveCollection.value.name = "GeoGuessr!";
 
 function ToggleObjective(event: Event) {
     let button: HTMLElement = event.target as HTMLElement;
