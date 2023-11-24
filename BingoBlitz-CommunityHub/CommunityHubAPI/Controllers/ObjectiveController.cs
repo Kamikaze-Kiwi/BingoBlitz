@@ -18,24 +18,15 @@ namespace BingoBlitz_CommunityHub.Controllers
             _objectiveData = objectiveData;
         }
 
-        [Obsolete("Method currently not working as intended. Use 'collections/get' instead")]
         [HttpGet]
         [Route("collections/getqueryable")]
         public async Task<ActionResult<IterableObjectiveCollectionData>> GetObjectiveCollectionsQueryable(
             string? continuationToken = null,
-            int start = 0,
             int count = 10,
             string? filter = null)
         {
-            var result = await _objectiveData.QueryCollectionsByPage(start, count, continuationToken, filter);
+            var result = await _objectiveData.QueryCollectionsByPage(count, continuationToken, filter ?? "");
             return result;
-        }
-
-        [HttpGet]
-        [Route("collections/get")]
-        public async Task<ActionResult<List<ObjectiveCollection>>> GetObjectiveCollections()
-        {
-            return await _objectiveData.GetAllObjectiveCollections();
         }
 
         [HttpGet]

@@ -2,6 +2,8 @@
 using BingoBlitz_CommunityHub.Models;
 using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.Cosmos.Linq;
+using Microsoft.Azure.Documents;
+using Microsoft.Azure.Documents.Client;
 
 namespace BingoBlitz_CommunityHub.Data
 {
@@ -19,29 +21,21 @@ namespace BingoBlitz_CommunityHub.Data
             _container = _cosmosClient.GetContainer("CommunityHub", "ObjectiveCollection");
         }
 
-        [Obsolete("Method currently not working as expected, use 'GetAllObjectiveCollections' instead.")]
-        public async Task<IterableObjectiveCollectionData> QueryCollectionsByPage(int pageNumber, int pageSize, string? continuationToken = null, string filter = "")
+        public async Task<IterableObjectiveCollectionData> QueryCollectionsByPage(int pageSize, string? continuationToken = null, string filter = "")
         {
-            QueryDefinition query = new QueryDefinition("SELECT * FROM ObjectiveCollection");
+            QueryRequestOptions requestOptions = new()
+            {
+                MaxItemCount = pageSize
+            };
 
-            //QueryDefinition query = new QueryDefinition("SELECT * FROM ObjectiveCollection WHERE ObjectiveCollection.Name LIKE @nameFilter")
-            //    .WithParameter("@nameFilter", $"%{filter}%");
+            QueryDefinition queryDefinition = new QueryDefinition("SELECT c.id, c.Name, ARRAY_LENGTH(c.Objectives) AS ObjectivesCount FROM c WHERE CONTAINS(c.Name, @filter)")
+                .WithParameter("@filter", filter);
 
-            FeedIterator<ObjectiveCollection> iterator = _container.GetItemQueryIterator<ObjectiveCollection>(
-                query,
-                requestOptions: new()
-                {
-                    MaxItemCount = pageSize
-                }
-            );
+            FeedIterator<ObjectiveCollection> feedIterator = _container.GetItemQueryIterator<ObjectiveCollection>(queryDefinition, continuationToken, requestOptions);
 
-            FeedResponse<ObjectiveCollection> a = await iterator.ReadNextAsync();
+            FeedResponse<ObjectiveCollection> result = await feedIterator.ReadNextAsync();
 
-            return new(
-                continuationToken: a.ContinuationToken,
-                totalPages: 5,
-                objectiveCollections: a.Resource.ToList()
-            );
+            return new IterableObjectiveCollectionData(result.Resource.ToList(), result.ContinuationToken);
         }
 
         public async Task<ObjectiveCollection> GetObjectiveCollectionById(string id)
@@ -58,15 +52,6 @@ namespace BingoBlitz_CommunityHub.Data
             ItemResponse<ObjectiveCollection> response = await _container.CreateItemAsync(collection);
 
             return response.Resource.Id;
-        }
-
-        public async Task<List<ObjectiveCollection>> GetAllObjectiveCollections()
-        {
-            IOrderedQueryable<ObjectiveCollection> linq = _container.GetItemLinqQueryable<ObjectiveCollection>();
-
-            FeedResponse<ObjectiveCollection> response = await linq.ToFeedIterator().ReadNextAsync();
-
-            return response.ToList();
         }
     }
 }
