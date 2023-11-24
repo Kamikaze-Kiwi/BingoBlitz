@@ -4,6 +4,7 @@ using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.Cosmos.Linq;
 using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
+using static BingoBlitz_CommunityHub.Models.IterableObjectiveCollectionData;
 
 namespace BingoBlitz_CommunityHub.Data
 {
@@ -28,12 +29,12 @@ namespace BingoBlitz_CommunityHub.Data
                 MaxItemCount = pageSize
             };
 
-            QueryDefinition queryDefinition = new QueryDefinition("SELECT c.id, c.Name, ARRAY_LENGTH(c.Objectives) AS ObjectivesCount FROM c WHERE CONTAINS(c.Name, @filter)")
-                .WithParameter("@filter", filter);
+            QueryDefinition queryDefinition = new QueryDefinition("SELECT c.id, c.Name, ARRAY_LENGTH(c.Objectives) AS ObjectiveCount FROM c WHERE CONTAINS(c.Name, @filter)")
+            .WithParameter("@filter", filter);
 
-            FeedIterator<ObjectiveCollection> feedIterator = _container.GetItemQueryIterator<ObjectiveCollection>(queryDefinition, continuationToken, requestOptions);
+            FeedIterator<ObjectiveCollectionData> feedIterator = _container.GetItemQueryIterator<ObjectiveCollectionData>(queryDefinition, continuationToken, requestOptions);
 
-            FeedResponse<ObjectiveCollection> result = await feedIterator.ReadNextAsync();
+            FeedResponse<ObjectiveCollectionData> result = await feedIterator.ReadNextAsync();
 
             return new IterableObjectiveCollectionData(result.Resource.ToList(), result.ContinuationToken);
         }
