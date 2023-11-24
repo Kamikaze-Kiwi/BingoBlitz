@@ -71,4 +71,15 @@ textarea {
 
 h1 {
     color: var(--indian);
+    text-align: center;
+}
+
+.noBorderRadiusLeft{
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+}
+
+.noBorderRadiusRight{
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
 }
