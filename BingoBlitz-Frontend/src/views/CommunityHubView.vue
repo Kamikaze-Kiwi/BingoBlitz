@@ -58,7 +58,8 @@
 
     <div class="objectiveContainer">
       <div v-for="item in items" class="objectiveItem">
-        <a class="objectiveTitle"> {{ item.name }} </a>
+        <a class="objectiveTitle"> {{ item.name }}</a>
+        <a class="objectiveSubtitle">By {{ item.userName }}</a>
         <a class="objectiveCount"> {{ item.objectiveCount }} objectives </a>
         <hr>
         <div class="buttonDrawer">

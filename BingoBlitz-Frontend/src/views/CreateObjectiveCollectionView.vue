@@ -83,8 +83,8 @@ function SaveCollection() {
         return;
     }
 
-    objectiveCollection.value.userid = user.value?.sub?.split('|')[1] ?? "0";
-    objectiveCollection.value.username = user.value?.name ?? "0";
+    objectiveCollection.value.userId = user.value?.sub?.split('|')[1] ?? "0";
+    objectiveCollection.value.userName = user.value?.name ?? "0";
 
     axios.post(
         "http://localhost:4002/api/objectives/collections/save",

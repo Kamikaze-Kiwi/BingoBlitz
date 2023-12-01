@@ -7,6 +7,15 @@
     --light: #cbd0d3;
 }
 
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: var(--powder);
+}
+
 .centerContentHorizontal {
     display: flex;
     flex-direction: column;
