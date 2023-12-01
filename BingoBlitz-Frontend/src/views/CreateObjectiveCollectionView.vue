@@ -6,6 +6,9 @@ import type Objective from '@/types/objective';
 import EmojiPicker from 'vue3-emoji-picker'
 import 'vue3-emoji-picker/css'
 
+import { useAuth0 } from '@auth0/auth0-vue';
+const { user } = useAuth0();
+
 let objectiveCollection = ref({} as ObjectiveCollection);
 objectiveCollection.value.name = "";
 objectiveCollection.value.objectives = [];
@@ -80,8 +83,8 @@ function SaveCollection() {
         return;
     }
 
-    console.log(objectiveCollection.value.name);
-    console.table(objectiveCollection.value.objectives);
+    objectiveCollection.value.userid = user.value?.sub?.split('|')[1] ?? "0";
+    objectiveCollection.value.username = user.value?.name ?? "0";
 
     axios.post(
         "http://localhost:4002/api/objectives/collections/save",
