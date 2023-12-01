@@ -62,18 +62,13 @@
         <a class="objectiveCount"> {{ item.objectiveCount }} objectives </a>
         <hr>
         <div class="buttonDrawer">
-        <a class="objectiveTitle"> {{ item.name }} </a>
-        <a class="objectiveCount"> {{ item.objectiveCount }} objectives </a>
-        <hr>
-        <div class="buttonDrawer">
           <button>View details</button>
           <button>Create lobby</button>
         </div>
       </div>
     </div>
-
-      <button v-if="hasMoreItems" @click="GetItems">Load more</button>
-      <h3 v-else>Reached bottom of results...</h3>
+    <button v-if="hasMoreItems" @click="GetItems">Load more</button>
+    <h3 v-else>Reached bottom of results...</h3>
   </div>
 </template>
 
