@@ -24,7 +24,7 @@
       params: {
         continuationToken: continuationToken,
         filter: filter.value,
-        count: 2
+        count: 10
       }
     })
       .then(response => {
@@ -58,10 +58,12 @@
 
     <div class="objectiveContainer">
       <div v-for="item in items" class="objectiveItem">
-        <a> {{ item.name }} </a>
-        <a> {{ item.objectiveCount }} objectives </a>
-        <div>
+        <a class="objectiveTitle"> {{ item.name }} </a>
+        <a class="objectiveCount"> {{ item.objectiveCount }} objectives </a>
+        <hr>
+        <div class="buttonDrawer">
           <button>View details</button>
+          <button>Create lobby</button>
         </div>
       </div>
     </div>
@@ -92,5 +94,24 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+}
+
+.objectiveTitle {
+  font-size: 1.5em;
+  font-weight: bold;
+  text-align: center;
+  word-break: break-all;
+}
+
+.objectiveCount {
+  font-size: 1.2em;
+}
+
+.buttonDrawer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
 }
 </style>
