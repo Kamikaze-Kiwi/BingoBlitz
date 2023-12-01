@@ -22,15 +22,23 @@ namespace BingoBlitz_CommunityHub.Data
             _container = _cosmosClient.GetContainer("CommunityHub", "ObjectiveCollection");
         }
 
-        public async Task<IterableObjectiveCollectionData> QueryCollectionsByPage(int pageSize, string? continuationToken = null, string filter = "")
+        public async Task<IterableObjectiveCollectionData> QueryCollectionsByPage(int pageSize, string? continuationToken = null, string filter = "", string? userid = null)
         {
             QueryRequestOptions requestOptions = new()
             {
                 MaxItemCount = pageSize
             };
 
-            QueryDefinition queryDefinition = new QueryDefinition("SELECT c.id, c.Name, ARRAY_LENGTH(c.Objectives) AS ObjectiveCount FROM c WHERE CONTAINS(c.Name, @filter)")
-            .WithParameter("@filter", filter);
+            QueryDefinition queryDefinition = 
+                userid == null
+                ? //if userid is null:
+                new QueryDefinition("SELECT c.id, c.Name, c.UserId, c.UserName, ARRAY_LENGTH(c.Objectives) AS ObjectiveCount FROM c WHERE CONTAINS(c.Name, @filter)")
+                    .WithParameter("@filter", filter)
+
+                : //if userid is not null:
+                new QueryDefinition("SELECT c.id, c.Name, c.UserId, c.UserName, ARRAY_LENGTH(c.Objectives) AS ObjectiveCount FROM c WHERE CONTAINS(c.Name, @filter) AND c.UserId = @userid")
+                    .WithParameter("@filter", filter)
+                    .WithParameter("@userid", userid);
 
             FeedIterator<ObjectiveCollectionData> feedIterator = _container.GetItemQueryIterator<ObjectiveCollectionData>(queryDefinition, continuationToken, requestOptions);
 

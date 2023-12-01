@@ -30,6 +30,18 @@ namespace BingoBlitz_CommunityHub.Controllers
         }
 
         [HttpGet]
+        [Route("collections/getqueryablebyuser")]
+        public async Task<ActionResult<IterableObjectiveCollectionData>> GetObjectiveCollectionsQueryableByUser(
+            string userId,
+            string? continuationToken = null,
+            int count = 10,
+            string? filter = null)
+        {
+            var result = await _objectiveData.QueryCollectionsByPage(count, continuationToken, filter ?? "", userId);
+            return result;
+        }
+
+        [HttpGet]
         [Route("collections/getbyid")]
         public async Task<ActionResult<ObjectiveCollection>> GetObjectiveCollectionById(string id) 
         {
