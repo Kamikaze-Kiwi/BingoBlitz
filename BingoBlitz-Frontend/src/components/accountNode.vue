@@ -18,7 +18,7 @@ function Logout() {
     <div>
         <div v-if="isLoading">...</div>
         <div v-else-if="isAuthenticated && user">
-            <span>Signed in as <RouterLink :to="{ name: 'profile', params: { id: user.sub?.split('|')[1] } }">{{ user.name }}</RouterLink>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <span>Signed in as <RouterLink to="profile">{{ user.name }}</RouterLink>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
             <a href="" @click="Logout">Logout</a>
         </div>
         <div v-else>

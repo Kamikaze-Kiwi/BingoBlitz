@@ -24,7 +24,7 @@ const router = createRouter({
       component: CreateObjectiveCollectionView
     },
     {
-      path: '/Profile/:id',
+      path: '/Profile',
       name: 'profile',
       component: ProfileView
     },
