@@ -62,6 +62,10 @@
         <a class="objectiveCount"> {{ item.objectiveCount }} objectives </a>
         <hr>
         <div class="buttonDrawer">
+        <a class="objectiveTitle"> {{ item.name }} </a>
+        <a class="objectiveCount"> {{ item.objectiveCount }} objectives </a>
+        <hr>
+        <div class="buttonDrawer">
           <button>View details</button>
           <button>Create lobby</button>
         </div>
