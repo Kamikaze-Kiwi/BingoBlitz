@@ -7,7 +7,7 @@ import EmojiPicker from 'vue3-emoji-picker'
 import 'vue3-emoji-picker/css'
 
 import { useAuth0 } from '@auth0/auth0-vue';
-const { user } = useAuth0();
+const { user, getAccessTokenSilently } = useAuth0();
 
 let objectiveCollection = ref({} as ObjectiveCollection);
 objectiveCollection.value.name = "";
@@ -57,7 +57,7 @@ function RemoveObjective(index: number) {
     objectiveCollection.value.objectives.splice(index, 1);
 }
 
-function SaveCollection() {
+async function SaveCollection() {
     if (objectiveCollection.value.name == "") {
         alert("You must give your collection a name!");
         return;
@@ -86,12 +86,15 @@ function SaveCollection() {
     objectiveCollection.value.userId = user.value?.sub?.split('|')[1] ?? "0";
     objectiveCollection.value.userName = user.value?.name ?? "0";
 
-    axios.post(
+    const token = await getAccessTokenSilently();
+    
+    await axios.post(
         "http://localhost:4002/api/objectives/collections/save",
         objectiveCollection.value,
         {
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
             },
         }
     )

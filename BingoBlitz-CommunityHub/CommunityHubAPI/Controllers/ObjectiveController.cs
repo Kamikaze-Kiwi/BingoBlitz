@@ -57,7 +57,7 @@ namespace BingoBlitz_CommunityHub.Controllers
         [Route("collections/save")]
         public async Task<ActionResult<string>> SaveObjectiveCollection(ObjectiveCollection objectiveCollection)
         {
-            string? userId = User.FindFirst("sub")?.Value;
+            string? userId = User.Identity?.Name?.Split('|')[1];
             if (userId == null || userId != objectiveCollection.UserId) return StatusCode(StatusCodes.Status401Unauthorized, "User not authorized to make request.");
 
             if (objectiveCollection == null) return StatusCode(StatusCodes.Status400BadRequest, "'objectiveCollection' can not be null.");

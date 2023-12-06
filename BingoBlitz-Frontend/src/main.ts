@@ -15,7 +15,8 @@ app.use(
         domain: "bingoblitz.eu.auth0.com",
         clientId: "vUYV4sLn2T4GazU9jgifkYPH9cszJkf0",
         authorizationParams: {
-            redirect_uri: window.location.origin
+            redirect_uri: window.location.origin,
+            audience: "CommunityHub",
         }
     })
 );
