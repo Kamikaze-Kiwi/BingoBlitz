@@ -1,7 +1,9 @@
 ﻿using BingoBlitz_CommunityHub.Data;
 using BingoBlitz_CommunityHub.Data.Interfaces;
 using BingoBlitz_CommunityHub.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Reflection.Metadata.Ecma335;
 
 namespace BingoBlitz_CommunityHub.Controllers
 {
@@ -51,9 +53,13 @@ namespace BingoBlitz_CommunityHub.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [Route("collections/save")]
         public async Task<ActionResult<string>> SaveObjectiveCollection(ObjectiveCollection objectiveCollection)
         {
+            string? userId = User.FindFirst("sub")?.Value;
+            if (userId == null || userId != objectiveCollection.UserId) return StatusCode(StatusCodes.Status401Unauthorized, "User not authorized to make request.");
+
             if (objectiveCollection == null) return StatusCode(StatusCodes.Status400BadRequest, "'objectiveCollection' can not be null.");
 
             return await _objectiveData.SaveObjectiveCollection(objectiveCollection);
