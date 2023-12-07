@@ -59,7 +59,7 @@ builder.Services.AddSingleton<CosmosClient>(provider =>
 });
 
 builder.Services.AddScoped<IObjectiveData, CosmosObjectiveData>();
-IdentityModelEventSource.ShowPII = true;
+
 // Add authentication service:
 builder.Services.AddAuthentication(options =>
 {
