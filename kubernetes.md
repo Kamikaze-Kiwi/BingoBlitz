@@ -10,7 +10,7 @@ This guide will help you set up a local Kubernetes environment for this project.
 - Minikube installed
 - *(Step 0 only)* Kompose installed
 
-# Commands
+# Commands (initial setup)
 
 *(in order, run in the project root folder (where this file is located))*
 
@@ -59,3 +59,29 @@ This guide will help you set up a local Kubernetes environment for this project.
     ```
     kubectl get services
     ```
+
+
+# Commands (after initial setup)
+You can copy and paste this into a PowerShell terminal to run all commands at once:
+
+```
+minikube start
+minikube -p minikube docker-env --shell powershell | Invoke-Expression
+docker-compose build
+docker-compose push
+kubectl apply -f .kubernetes
+Start-Process cmd.exe -ArgumentList "/k minikube tunnel"
+Start-Process cmd.exe -ArgumentList "/k minikube dashboard"
+kubectl get services
+```
+
+
+# Commands (already running, update images)
+You can copy and paste this into a PowerShell terminal to run all commands at once:
+
+```
+minikube -p minikube docker-env --shell powershell | Invoke-Expression
+docker-compose build
+docker-compose push
+kubectl get services
+```
