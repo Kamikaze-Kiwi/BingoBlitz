@@ -16,7 +16,8 @@ This guide will help you set up a local Kubernetes environment for this project.
 
 0. *(Optional, only needed when docker-compose.yml edited)* Convert docker-compose to Kubernetes configurations:
     ```
-    kompose convert -f docker-compose.yml -o .kubernetes
+    docker compose config > docker-compose-resolved.yml
+    kompose convert -f docker-compose-resolved.yml -o .kubernetes
     ```
 
 1. Start Minikube:
