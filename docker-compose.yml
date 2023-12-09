@@ -6,6 +6,8 @@ services:
     ports:
       - "4000:80"
     image: frontend
+    networks:
+    - bingoblitz-network
     labels:
       kompose.service.type: LoadBalancer
       kompose.image-pull-policy: "Never"
@@ -15,6 +17,8 @@ services:
     ports:
       - "4001:80"
     image: gameserver
+    networks:
+    - bingoblitz-network
     labels:
       kompose.service.type: LoadBalancer
       kompose.image-pull-policy: "Never"
@@ -25,6 +29,8 @@ services:
     ports:
       - "4002:80"
     image: communityhub
+    networks:
+    - bingoblitz-network
     env_file:
       - ./BingoBlitz-CommunityHub/CommunityHubAPI/.env
     labels:
@@ -36,12 +42,16 @@ services:
     ports:
       - "4003:80"
     image: gameservice
+    networks:
+    - bingoblitz-network
     labels:
       kompose.service.type: LoadBalancer
       kompose.image-pull-policy: "Never"
 
   rabbitmq:
     image: rabbitmq:management
+    networks:
+    - bingoblitz-network
     ports:
         - 5672:5672
         - 15672:15672
@@ -49,5 +59,9 @@ services:
       - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
       - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
     labels:
-      kompose.service.type: LoadBalancer
+      kompose.service.type: ClusterIP
+      kompose.controller.type: statefulset
     
+networks:
+ bingoblitz-network:
+   driver: bridge

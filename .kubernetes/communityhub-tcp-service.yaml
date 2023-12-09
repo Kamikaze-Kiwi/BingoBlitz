@@ -12,7 +12,7 @@ metadata:
   name: communityhub-tcp
 spec:
   ports:
-    - name: "4002"
+    - name: communityhub
       port: 4002
       targetPort: 80
   selector:

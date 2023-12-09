@@ -12,7 +12,7 @@ metadata:
   name: frontend-tcp
 spec:
   ports:
-    - name: "4000"
+    - name: frontend
       port: 4000
       targetPort: 80
   selector:

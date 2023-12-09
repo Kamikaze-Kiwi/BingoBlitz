@@ -12,8 +12,8 @@ metadata:
   name: gameservice-tcp
 spec:
   ports:
-    - name: "4003"
-      port: 4003
+    - name: gameservice
+      port: 80
       targetPort: 80
   selector:
     io.kompose.service: gameservice
