@@ -33,7 +33,7 @@ spec:
           imagePullPolicy: Never
           name: gameservice
           ports:
-            - containerPort: 80
+            - containerPort: 4003
               protocol: TCP
           resources: {}
       restartPolicy: Always

@@ -8,24 +8,36 @@ This guide will help you set up a local Kubernetes environment for this project.
 - Docker-compose installed
 - Kubectl installed
 - Minikube installed
-- *(Step 0 only)* Kompose installed
+- bingoblitz domains set up in your hosts file (see [Setting up domains in hosts file](#setting-up-domains-in-hosts-file))
 
-# Commands (initial setup)
+# Setting up domains in hosts file
+
+1. Open hosts file in any text editor as administrator:
+    ```
+    Windows: C:\Windows\System32\drivers\etc\hosts
+    Linux: /etc/hosts
+    Mac: /private/etc/hosts
+    ```
+
+2. Add the following lines to the end of the file:
+    ```
+    # Kubernetes Ingress for BingoBlitz
+    127.0.0.1 bingoblitz.local
+    127.0.0.1 gameserver.bingoblitz.local
+    127.0.0.1 communityhub.bingoblitz.local
+    127.0.0.1 gameservice.bingoblitz.local
+    ```
+
+# Useful commands
 
 *(in order, run in the project root folder (where this file is located))*
-
-0. *(Optional, only needed when docker-compose.yml edited)* Convert docker-compose to Kubernetes configurations:
-    ```
-    docker compose config > docker-compose-resolved.yml
-    kompose convert -f docker-compose-resolved.yml -o .kubernetes
-    ```
 
 1. Start Minikube:
     ```
     minikube start
     ```
 
-2. Set up Minikube for Docker environment in PowerShell:
+2. Set up Minikube for Docker environment in PowerShell (Needed for step 3 & 4):
     ```
     minikube -p minikube docker-env --shell powershell | Invoke-Expression
     ```
@@ -61,7 +73,7 @@ This guide will help you set up a local Kubernetes environment for this project.
     ```
 
 
-# Commands (after initial setup)
+# Commands (Start/restart all)
 You can copy and paste this into a PowerShell terminal to run all commands at once:
 
 ```
@@ -80,8 +92,9 @@ kubectl get services
 You can copy and paste this into a PowerShell terminal to run all commands at once:
 
 ```
+minikube start
 minikube -p minikube docker-env --shell powershell | Invoke-Expression
 docker-compose build
 docker-compose push
-kubectl get services
+kubectl apply -f .kubernetes
 ```
