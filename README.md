@@ -96,6 +96,8 @@ These are the things you will need to run the project
   npm install npm@latest -g
   ```
 
+* A Cosmos DB instance with a database called "CommunityHub" and a container called "ObjectiveCollection" with a partition key called "/Id". This database can either be hosted on Azure or locally. If you want to host it locally, you can use the [Azure Cosmos DB Emulator](https://learn.microsoft.com/en-us/azure/cosmos-db/how-to-develop-emulator?tabs=windows%2Ccsharp&pivots=api-nosql) to do so.
+
 ### Installation
 
 1. Clone the repo
@@ -107,6 +109,16 @@ These are the things you will need to run the project
    cd BingoBlitz-Frontend
    npm install
    ```
+
+### Configuration
+
+1. Create a file called `.env` in "BingoBlitz-CommunityHub/CommunityHubAPI" and add the following lines:
+   ```
+   CosmosAccountEndpoint=<your Cosmos DB endpoint>
+   CosmosAccountKey=<your Cosmos DB key>
+   ```
+
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -130,6 +142,10 @@ Each part of this application can be ran in Docker. Before using Docker, ensure 
   docker-compose build
   docker-compose up
   ```
+
+
+### Running in Kubernetes
+This application can be ran in Kubernetes. Please refer to [kubernetes.md](kubernetes.md) for more information.
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
