@@ -3,6 +3,7 @@
   import axios from 'axios';
   import type IterableObjectiveCollectionData from '@/types/iterableObjectiveCollectionData';
   import type ObjectiveCollection from '@/types/objectiveCollectionData';
+  const communityHubEndpoint = import.meta.env.VITE_COMMUNITYHUB_API as string;
 
   let searchFilter = ref('');
   let filter = ref('');
@@ -20,7 +21,7 @@
   }
 
   function GetItems() {
-    axios.get<IterableObjectiveCollectionData>('http://localhost:4002/api/objectives/collections/getqueryable', {
+    axios.get<IterableObjectiveCollectionData>(communityHubEndpoint + 'objectives/collections/getqueryable', {
       params: {
         continuationToken: continuationToken,
         filter: filter.value,

@@ -5,6 +5,7 @@ import type ObjectiveCollection from '@/types/objectiveCollection';
 import type Objective from '@/types/objective';
 import EmojiPicker from 'vue3-emoji-picker'
 import 'vue3-emoji-picker/css'
+const communityHubEndpoint = import.meta.env.VITE_COMMUNITYHUB_API as string;
 
 import { useAuth0 } from '@auth0/auth0-vue';
 const { user, getAccessTokenSilently } = useAuth0();
@@ -89,7 +90,7 @@ async function SaveCollection() {
     const token = await getAccessTokenSilently();
     
     await axios.post(
-        "http://localhost:4002/api/objectives/collections/save",
+        communityHubEndpoint + "objectives/collections/save",
         objectiveCollection.value,
         {
             headers: {

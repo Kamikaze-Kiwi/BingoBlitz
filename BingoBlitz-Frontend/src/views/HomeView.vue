@@ -1,9 +1,10 @@
 <script setup lang="ts">
   import axios from 'axios';
+  const gameServerEndpoint = import.meta.env.VITE_GAMESERVER_API as string;
 
   function JoinGame(){
     let code: string = (document.getElementById("JoinGameIdInput") as HTMLInputElement).value;
-    axios.post<string>('http://localhost:4001/api/game/join?gameId=' + code)
+    axios.post<string>(gameServerEndpoint + 'game/join?gameId=' + code)
       .then(response => {
         alert(response.data);
       })

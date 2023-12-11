@@ -6,6 +6,7 @@ import { ref } from 'vue'
 import axios from 'axios';
 import type IterableObjectiveCollectionData from '@/types/iterableObjectiveCollectionData';
 import type ObjectiveCollection from '@/types/objectiveCollectionData';
+const communityHubEndpoint = import.meta.env.VITE_COMMUNITYHUB_API as string;
 
 let items = ref([] as ObjectiveCollection[]);
 let searchFilter = ref('');
@@ -17,7 +18,7 @@ let hasAnyItems = ref(false);
 GetItems();
 
 function GetItems() {
-    axios.get<IterableObjectiveCollectionData>('http://localhost:4002/api/objectives/collections/getqueryablebyuser', {
+    axios.get<IterableObjectiveCollectionData>(communityHubEndpoint + 'objectives/collections/getqueryablebyuser', {
         params: {
             continuationToken: continuationToken,
             filter: filter.value,
