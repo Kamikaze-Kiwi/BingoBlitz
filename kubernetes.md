@@ -2,7 +2,9 @@
 
 This guide will help you set up a local Kubernetes environment for this project. 
 
-# Requirements
+> This guide focusses on setting up a local Kubernetes environment using Minikube. You can also use any other Kubernetes environment, although the commands and configuration will be different.
+
+## Requirements
 
 - Docker installed
 - Docker-compose installed
@@ -10,7 +12,7 @@ This guide will help you set up a local Kubernetes environment for this project.
 - Minikube installed
 - bingoblitz domains set up in your hosts file (see [Setting up domains in hosts file](#setting-up-domains-in-hosts-file))
 
-# Setting up domains in hosts file
+## Setting up domains in hosts file
 
 1. Open hosts file in any text editor as administrator:
     ```
@@ -28,7 +30,7 @@ This guide will help you set up a local Kubernetes environment for this project.
     127.0.0.1 gameservice.bingoblitz.local
     ```
 
-# Useful commands
+## Useful commands
 
 *(in order, run in the project root folder (where this file is located))*
 
@@ -67,14 +69,14 @@ This guide will help you set up a local Kubernetes environment for this project.
     kubectl get services
     ```
 
-# configuration
+## configuration
 
 1. Add community hub env to Kubernetes secrets (you might need to change the values in the .env file to match your Cosmos DB instance)
    ```sh
    kubectl create secret generic communityhub-env --from-env-file=BingoBlitz-CommunityHub/CommunityHubAPI/.env
    ```
 
-# Commands (Start/restart all)
+## Commands (Start/restart all)
 You can copy and paste this into a PowerShell terminal to run all commands at once:
 
 ```
@@ -88,7 +90,7 @@ kubectl get services
 ```
 
 
-# Commands (already running, update images)
+## Commands (already running, update images)
 You can copy and paste this into a PowerShell terminal to run all commands at once:
 
 ```
@@ -98,7 +100,7 @@ kubectl apply -f .kubernetes
 ```
 
 
-# Commands (Enable horizontal pod autoscaling)
+## Commands (Enable horizontal pod autoscaling)
 You can copy and paste this into a PowerShell terminal to run all commands at once:
 
 ```
