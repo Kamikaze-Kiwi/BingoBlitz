@@ -47,31 +47,32 @@ This guide will help you set up a local Kubernetes environment for this project.
     docker-compose build
     ```
 
-4. Push Docker Compose:
-    ```
-    docker-compose push
-    ```
-
-5. Apply Kubernetes configurations:
+4. Apply Kubernetes configurations:
     ```
     kubectl apply -f .kubernetes
     ```
 
-6. *(Separate terminal)* Open kubernetes tunnel:
+5. *(Separate terminal)* Open kubernetes tunnel:
     ```
     minikube tunnel
     ```
 
-7. *(Optional, separate terminal)* Open Minikube Dashboard:
+6. *(Optional, separate terminal)* Open Minikube Dashboard:
     ```
     minikube dashboard
     ```
 
-8. *(Optional)* Get service status and IP/ports:
+7. *(Optional)* Get service status and IP/ports:
     ```
     kubectl get services
     ```
 
+# configuration
+
+1. Add community hub env to Kubernetes secrets (you might need to change the values in the .env file to match your Cosmos DB instance)
+   ```sh
+   kubectl create secret generic communityhub-env --from-env-file=BingoBlitz-CommunityHub/CommunityHubAPI/.env
+   ```
 
 # Commands (Start/restart all)
 You can copy and paste this into a PowerShell terminal to run all commands at once:
@@ -80,7 +81,6 @@ You can copy and paste this into a PowerShell terminal to run all commands at on
 minikube start
 minikube -p minikube docker-env --shell powershell | Invoke-Expression
 docker-compose build
-docker-compose push
 kubectl apply -f .kubernetes
 Start-Process cmd.exe -ArgumentList "/k minikube tunnel"
 Start-Process cmd.exe -ArgumentList "/k minikube dashboard"
@@ -92,10 +92,8 @@ kubectl get services
 You can copy and paste this into a PowerShell terminal to run all commands at once:
 
 ```
-minikube start
 minikube -p minikube docker-env --shell powershell | Invoke-Expression
 docker-compose build
-docker-compose push
 kubectl apply -f .kubernetes
 ```
 

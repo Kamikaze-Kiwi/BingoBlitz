@@ -6,7 +6,6 @@ metadata:
     kompose.image-pull-policy: Never
     kompose.service.type: LoadBalancer
     kompose.version: 1.31.2 (a92241f79)
-  creationTimestamp: null
   labels:
     io.kompose.service: gameserver
   name: gameserver
@@ -23,7 +22,6 @@ spec:
         kompose.image-pull-policy: Never
         kompose.service.type: LoadBalancer
         kompose.version: 1.31.2 (a92241f79)
-      creationTimestamp: null
       labels:
         io.kompose.network/bingoblitz-bingoblitz-network: "true"
         io.kompose.service: gameserver
@@ -35,6 +33,9 @@ spec:
           ports:
             - containerPort: 4001
               protocol: TCP
-          resources: {}
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "250m"
       restartPolicy: Always
 status: {}

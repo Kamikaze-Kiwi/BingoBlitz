@@ -6,7 +6,6 @@ metadata:
     kompose.image-pull-policy: Never
     kompose.service.type: LoadBalancer
     kompose.version: 1.31.2 (a92241f79)
-  creationTimestamp: null
   labels:
     io.kompose.service: communityhub
   name: communityhub
@@ -23,23 +22,23 @@ spec:
         kompose.image-pull-policy: Never
         kompose.service.type: LoadBalancer
         kompose.version: 1.31.2 (a92241f79)
-      creationTimestamp: null
       labels:
         io.kompose.network/bingoblitz-bingoblitz-network: "true"
         io.kompose.service: communityhub
     spec:
       containers:
-        - env:
-            - name: CosmosAccountEndpoint
-              value: https://bingoblitz-cosmos.documents.azure.com:443/
-            - name: CosmosAccountKey
-              value: 7QQxmWYSUKpfQfzkdk1Kofpl9oc49nNVLo0ggr7pzWK4yHnBKXQFmpkXIalaoyPVsnI0YMx8OaDeACDbxu5mng==
-          image: communityhub
+        - image: communityhub
           imagePullPolicy: Never
           name: communityhub
+          envFrom:
+            - secretRef:
+                name: communityhub-env
           ports:
             - containerPort: 4002
               protocol: TCP
-          resources: {}
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "250m"
       restartPolicy: Always
 status: {}
