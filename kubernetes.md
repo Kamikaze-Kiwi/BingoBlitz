@@ -98,14 +98,3 @@ minikube -p minikube docker-env --shell powershell | Invoke-Expression
 docker-compose build
 kubectl apply -f .kubernetes
 ```
-
-
-## Commands (Enable horizontal pod autoscaling)
-You can copy and paste this into a PowerShell terminal to run all commands at once:
-
-```
-kubectl autoscale deployment gameserver --cpu-percent=50 --min=1 --max=10
-kubectl autoscale deployment communityhub --cpu-percent=50 --min=1 --max=10
-kubectl autoscale deployment gameservice --cpu-percent=50 --min=1 --max=10
-kubectl autoscale deployment frontend --cpu-percent=50 --min=1 --max=10
-```

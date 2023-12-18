@@ -159,9 +159,12 @@ Each part of this application can be ran in Docker. Before using Docker, ensure 
 This application can be ran in Kubernetes. Please refer to [kubernetes.md](kubernetes.md) for more information.
 
 
-### Observing & Load testing
-This application can be observed and load tested using Prometheus and Grafana. Please refer to [observe & load test.md](observe%20%26%20load%20test.md) for more information.
+### Observing
+This application can be observed and load tested using Prometheus and Grafana. Please refer to [observing.md](observing.md) for more information.
 
+
+### Load testing
+This application can be load tested using k6. Please refer to [loadtesting.md](loadtesting.md) for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

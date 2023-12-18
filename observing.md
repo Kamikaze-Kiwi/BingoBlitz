@@ -1,6 +1,6 @@
-# Observing & Testing guide
+# Observing guide
 
-This guide will help you set up observing and load testing for this project. This guide assumes that you have already set up a local Kubernetes environment for this project. If you have not done so, please refer to the [kubernetes guide](kubernetes.md) for more information.
+This guide will help you set up observing for this project. This guide assumes that you have already set up a local Kubernetes environment for this project. If you have not done so, please refer to the [kubernetes guide](kubernetes.md) for more information.
 
 
 ## Requirements
@@ -59,7 +59,7 @@ This guide will help you set up observing and load testing for this project. Thi
     ```
 
 5. Get the admin password for Grafana:
-    > If you are using Windows, you may need to use Git Bash instead of PowerShell)
+    > If you are using Windows, you may need to use Git Bash instead of PowerShell
     ```sh
     kubectl get secret --namespace default grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
     ```
