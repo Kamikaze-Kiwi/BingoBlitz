@@ -1,10 +1,15 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
+import accountNode from './components/accountNode.vue';
 </script>
 
 <template>
   <header>
   </header>
+  <nav>
+    <RouterLink to="/">Home</RouterLink>
+    <accountNode />
+  </nav>
   <RouterView />
 </template>
 
@@ -14,7 +19,6 @@ nav {
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-  background-color: #f5f5f5;
-  border-radius: 0.5rem;
+  background-color: var(--ecru);
 }
 </style>

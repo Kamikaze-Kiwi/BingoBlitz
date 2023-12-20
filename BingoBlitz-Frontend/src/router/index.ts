@@ -1,6 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { authGuard } from "@auth0/auth0-vue";
+
 import HomeView from '../views/HomeView.vue'
 import CommunityHubView from '../views/CommunityHubView.vue'
+import CreateObjectiveCollectionView from '../views/CreateObjectiveCollectionView.vue'
+import ProfileView from '../views/ProfileView.vue'
 import NotFoundView from '../views/NotFoundView.vue'
 
 const router = createRouter({
@@ -15,6 +19,18 @@ const router = createRouter({
       path: '/communityhub',
       name: 'communityhub',
       component: CommunityHubView
+    },
+    {
+      path: '/CommunityHub/create',
+      name: 'createobjectivecollection',
+      component: CreateObjectiveCollectionView,
+      beforeEnter: authGuard
+    },
+    {
+      path: '/Profile',
+      name: 'profile',
+      component: ProfileView,
+      beforeEnter: authGuard
     },
     {
       path: '/:catchAll(.*)',

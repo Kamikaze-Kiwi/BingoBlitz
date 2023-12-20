@@ -7,6 +7,15 @@
     --light: #cbd0d3;
 }
 
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: var(--powder);
+}
+
 .centerContentHorizontal {
     display: flex;
     flex-direction: column;
@@ -59,11 +68,27 @@ input[type="email"],
 input[type="tel"],
 input[type="number"],
 input[type="search"],
-input[type="url"] {
+input[type="url"],
+textarea {
     background: var(--light);
     color: black;
     border: 0;
     border-radius: 5px;
     padding: 10px;
     font-size: 1.2rem;
+}
+
+h1 {
+    color: var(--indian);
+    text-align: center;
+}
+
+.noBorderRadiusLeft{
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+}
+
+.noBorderRadiusRight{
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
 }

@@ -11,9 +11,11 @@
     "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false"
   },
   "dependencies": {
+    "@auth0/auth0-vue": "^2.3.2",
     "axios": "^1.5.1",
     "vue": "^3.3.4",
-    "vue-router": "^4.2.4"
+    "vue-router": "^4.2.4",
+    "vue3-emoji-picker": "^1.1.8"
   },
   "devDependencies": {
     "@tsconfig/node18": "^18.2.2",

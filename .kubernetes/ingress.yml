@@ -1,0 +1,52 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: bingoblitz-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/cors-allow-methods: "PUT, GET, POST, OPTIONS"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "*"
+    nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+    - host: bingoblitz.local 
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: frontend-tcp
+                port:
+                  number: 4000  
+    - host: gameserver.bingoblitz.local 
+      http:
+        paths:    
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: gameserver-tcp
+                port:
+                  number: 4001   
+    - host: communityhub.bingoblitz.local 
+      http:
+        paths:                                 
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: communityhub-tcp
+                port:
+                  number: 4002
+    - host: gameservice.bingoblitz.local 
+      http:
+        paths:                  
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: gameservice-tcp
+                port:
+                  number: 4003

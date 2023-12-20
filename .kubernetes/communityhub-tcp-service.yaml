@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   annotations:
-    kompose.cmd: C:\ProgramData\chocolatey\lib\kubernetes-kompose\tools\kompose.exe convert -f docker-compose.yml -o .kubernetes
+    kompose.cmd: C:\ProgramData\chocolatey\lib\kubernetes-kompose\tools\kompose.exe convert -f docker-compose-resolved.yml -o .kubernetes
     kompose.image-pull-policy: Never
     kompose.service.type: LoadBalancer
     kompose.version: 1.31.2 (a92241f79)
@@ -12,11 +12,9 @@ metadata:
   name: communityhub-tcp
 spec:
   ports:
-    - name: "4002"
+    - name: communityhub
       port: 4002
       targetPort: 80
   selector:
     io.kompose.service: communityhub
   type: LoadBalancer
-status:
-  loadBalancer: {}
