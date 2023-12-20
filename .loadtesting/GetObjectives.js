@@ -3,9 +3,9 @@ import { check, sleep } from 'k6';
 
 export const options = {
   stages: [
-    { duration: '30s', target: 300 }, // simulate ramp-up of traffic from 1 to 300 users over 30 seconds,
-    { duration: '1m', target: 300 }, // stay at 300 users for 2 minutes
-    { duration: '30s', target: 0 }, // ramp-down to 0 users
+    { duration: '1m', target: 1000 }, // simulate ramp-up of traffic from 1 to 1000 users over 1 minute
+    { duration: '2m', target: 1000 }, // stay at 1000 users for 2 minutes
+    { duration: '1m', target: 0 }, // ramp-down to 0 users
   ],
   insecureSkipTLSVerify: true,
   noConnectionReuse: true
