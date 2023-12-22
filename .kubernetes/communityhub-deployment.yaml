@@ -27,7 +27,7 @@ spec:
         io.kompose.service: communityhub
     spec:
       containers:
-        - image: communityhub
+        - image: communityhub:latest
           imagePullPolicy: Always
           name: communityhub
           envFrom:
