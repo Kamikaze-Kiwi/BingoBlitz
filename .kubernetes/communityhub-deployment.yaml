@@ -27,7 +27,7 @@ spec:
         io.kompose.service: communityhub
     spec:
       containers:
-        - image: communityhub:latest
+        - image: bingoblitz.azurecr.io/communityhub:latest
           imagePullPolicy: Always
           name: communityhub
           envFrom:
