@@ -27,7 +27,7 @@ spec:
         io.kompose.service: frontend
     spec:
       containers:
-        - image: frontend
+        - image: bingoblitz.azurecr.io/frontend:latest
           imagePullPolicy: Always
           name: frontend
           ports:
