@@ -13,7 +13,6 @@ env:
     DEPLOYMENT_MANIFEST_PATH: |
         ./.kubernetes/frontend-deployment.yaml
         ./.kubernetes/frontend-tcp-service.yaml
-        ./.kubernetes/ingress.yml
 jobs:
     buildImage:
         permissions:

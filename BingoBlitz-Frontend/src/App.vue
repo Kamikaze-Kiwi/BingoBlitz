@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import accountNode from './components/accountNode.vue';
+// import accountNode from './components/accountNode.vue';
 </script>
 
 <template>
@@ -8,7 +8,7 @@ import accountNode from './components/accountNode.vue';
   </header>
   <nav>
     <RouterLink to="/">Home</RouterLink>
-    <accountNode />
+    <!-- <accountNode /> -->
   </nav>
   <RouterView />
 </template>
