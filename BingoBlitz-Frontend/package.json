@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --port 4242",
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "test:unit": "vitest",
@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@auth0/auth0-vue": "^2.3.2",
+    "ably": "^1.2.48",
     "axios": "^1.5.1",
     "vue": "^3.3.4",
     "vue-router": "^4.2.4",

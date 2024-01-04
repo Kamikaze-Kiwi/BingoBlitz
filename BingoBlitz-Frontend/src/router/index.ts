@@ -6,6 +6,7 @@ import CommunityHubView from '../views/CommunityHubView.vue'
 import CreateObjectiveCollectionView from '../views/CreateObjectiveCollectionView.vue'
 import ProfileView from '../views/ProfileView.vue'
 import NotFoundView from '../views/NotFoundView.vue'
+import PlayGameView from '../views/PlayGameView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -31,6 +32,11 @@ const router = createRouter({
       name: 'profile',
       component: ProfileView,
       beforeEnter: authGuard
+    },
+    {
+      path: '/playgame/:id',
+      name: 'playgame',
+      component: PlayGameView,
     },
     {
       path: '/:catchAll(.*)',
