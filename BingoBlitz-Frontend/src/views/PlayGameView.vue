@@ -12,12 +12,12 @@
 
     const teams = [
         { name: 'placeholder', color: 'placeholder'},
-        { name: 'Red', color: '#ff0000', players: [] as string[]},
-        { name: 'Blue', color: '#0000ff', players: [] as string[] },
-        { name: 'Green', color: '#00ff00', players: [] as string[] },
-        { name: 'Yellow', color: '#ffff00', players: [] as string[] },
-        { name: 'Orange', color: '#ffa500', players: [] as string[] },
-        { name: 'Pink', color: '#ffc0cb', players: [] as string[] },
+        { name: 'Red', color: '#ed5045', players: [] as string[]},
+        { name: 'Blue', color: '#4550ed', players: [] as string[] },
+        { name: 'Green', color: '#3cba4c', players: [] as string[] },
+        { name: 'Yellow', color: '#d6e64c', players: [] as string[] },
+        { name: 'Orange', color: '#de9835', players: [] as string[] },
+        { name: 'Pink', color: '#eb79ed', players: [] as string[] },
     ];
 
     //temporary for testing, these values will be retrieved from the server later
@@ -38,6 +38,7 @@
             { objective: { name: 'Climb 50 steps', description: 'Climb 50 steps on any stairs. You may not count the same stair twice.', thumbnailEmoji: '📶' }, claimedBy: null },
         ],
     ];
+    //
 
     const gameId = useRoute().params.id as string;
     let playerTeam = ref(1); 
@@ -49,6 +50,10 @@
         HandleIncomingMessage(message.data as GameStateUpdate);
     });
 
+    function SendMessage(message: GameStateUpdate){
+        channel.publish('gamestate', message);
+    }
+
     function HandleIncomingMessage(message: GameStateUpdate) {
         switch (message.type) {
             case GameStateUpdateType.itemClaimed:
@@ -57,16 +62,12 @@
         }
     }
 
-    function SendMessage(message: GameStateUpdate){
-        channel.publish('gamestate', message);
-    }
-
     function SelectCell(cell: GameStateItem) {
         selectedCell.value = cell;
     }
 
-    function ClaimCell(cell: GameStateItem) {
-        cell.claimedBy = playerTeam.value;
+    function ClaimCell(cell: GameStateItem, claim: boolean = true) {
+        cell.claimedBy = claim ? playerTeam.value : null;
         selectedCell.value = null;
 
         const cellIndexes = GetCellIndexes(cell);
@@ -80,7 +81,7 @@
             data: {
                 x: cellIndexes.x,
                 y: cellIndexes.y,
-                claimedBy: playerTeam.value
+                claimedBy: cell.claimedBy
             }
         });
     }
@@ -106,13 +107,16 @@
                 <div class="selected_cell_popover_content_objective_name">{{ selectedCell.objective.name }}</div>
                 <div class="selected_cell_popover_content_objective_description">{{ selectedCell.objective.description }}</div>
             </div>
+            <br/>
             <div class="selected_cell_popover_content_claimedby">
                 <a v-if="selectedCell.claimedBy != null">Currently claimed by <b v-bind:style="{ color: teams[selectedCell.claimedBy].color}">{{ teams[selectedCell.claimedBy].name }}.</b></a>
                 <a v-else>Currently not claimed by anyone.</a>
             </div>
+            <br/>
             <div class="selected_cell_popover_content_buttons">
-                <button @click="ClaimCell(selectedCell)">Claim</button>
-                <button @click="selectedCell = null">Close</button>
+                <button v-if="selectedCell.claimedBy == null" @click="ClaimCell(selectedCell)" v-bind:style="{ backgroundColor: teams[playerTeam].color }">Claim</button>
+                <button v-else-if="selectedCell.claimedBy == playerTeam" @click="ClaimCell(selectedCell, false)" v-bind:style="{ backgroundColor: teams[playerTeam].color }">Unclaim</button>
+                <button style="background-color: var(--indian);" @click="selectedCell = null">Close</button>
             </div>
         </div>
     </div>
@@ -129,9 +133,9 @@
         </table>
 
         <div class="teamscontainer">
+            <a class="above_teams_text_1">You are on team <b v-bind:style="{ color: teams[playerTeam].color }">{{ teams[playerTeam].name }}</b></a>
+            <a class="above_teams_text_2">Click any team below to switch teams.</a>
             <div class="teams">
-                <p class="above_teams_text">You are on team <b v-bind:style="{ color: teams[playerTeam].color }">{{ teams[playerTeam].name }}</b></p>
-                <p class="above_teams_text">Click any team below to switch teams.</p>
                 <div class="team" v-for="(team, index) in teams.slice(1)" v-bind:style="{ backgroundColor: team.color }" v-on:click="playerTeam = index + 1">
                     <div class="team_name">{{ team.name }}</div>
                 </div>
@@ -146,6 +150,8 @@
         height: 100%;
         width: 100%;
         justify-content: center;
+        overflow: hidden;
+        align-items: center;
     }
 
     .gameboard {
@@ -157,12 +163,17 @@
         margin: auto;
         border-collapse: collapse;
         table-layout: fixed;
+        margin: 1%;
     }
 
     .gameboard_cell {
-        border: 1px solid var(--light);
+        border: 1px solid black;
         text-align: center;
-        color: white;
+        background-color: var(--light);
+    }
+
+    .gameboard_cell:hover {
+        cursor: pointer;
     }
 
     .gameboard_cell_icon {
@@ -178,26 +189,14 @@
         color: black;
     }
 
-    @media (orientation: portrait) {
-        .gameboard_cell_icon {
-            text-align: center;
-            font-size: 8vw;
-        }
-
-        .gameboard_cell_name {
-            text-align: center;
-            height: 2.5em;
-            font-size: 4vw;
-        }   
-    }
-
     .teamscontainer {
         display: flex;
         justify-content: center;
         align-items: center;
         height: 90%;
-        width: 10%;
-        margin-left: 1%;
+        margin: 1%;
+        flex-direction: column;
+        width: 20%;
     }
 
     .teams {
@@ -214,7 +213,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        height: 20%;
+        min-height: 10%;
         width: 100%;
         border-radius: 20px;
         margin: 5px;
@@ -225,8 +224,14 @@
         text-align: center;
     }
 
-    .above_teams_text {
-        font-size: 1vw;
+    .above_teams_text_1 {
+        font-size: 3vh;
+        text-align: center;
+        color: white;
+    }
+
+    .above_teams_text_2 {
+        font-size: 1.5vh;
         text-align: center;
         color: white;
     }
@@ -240,7 +245,7 @@
         top: 0;
         left: 0;
         width: 100vw;
-        height: 100%;
+        height: 100vh;
         z-index: 1;
         background-color: rgba(58, 58, 58, 0.918);
     }
@@ -252,9 +257,7 @@
         transform: translate(-50%, -50%);
         border-radius: 20px;
         padding: 20px;
-        width: 50%;
-        height: 50%;
-        background-color: var(--indian);
+        background-color: var(--eerie);
     }
 
     .selected_cell_popover_content_objective {
@@ -267,18 +270,18 @@
     }   
 
     .selected_cell_popover_content_objective_icon {
-        font-size: 6vw;
+        font-size: 32vh;
         text-align: center;
     }
 
     .selected_cell_popover_content_objective_name {
-        font-size: 2vw;
+        font-size: 8vh;
         text-align: center;
         color: white;
     }
 
     .selected_cell_popover_content_objective_description {
-        font-size: 1vw;
+        font-size: 3vh;
         text-align: center;
         color: white;
     }
@@ -290,6 +293,8 @@
         align-items: center;
         height: 20%;
         width: 100%;
+        font-size: 3vh;
+        color: white;
     }
 
     .selected_cell_popover_content_buttons {
@@ -302,13 +307,63 @@
     }
 
     .selected_cell_popover_content_buttons button {
-        font-size: 1vw;
+        font-size: 3vh;
         text-align: center;
         color: white;
-        background-color: var(--glaucous);
         border-radius: 10px;
         padding: 10px;
         border: 1px solid var(--light);
+    }
+
+    @media (orientation: portrait) {
+        .gamecontainer {
+            flex-direction: column;
+        }
+
+        .gameboard_cell_icon {
+            text-align: center;
+            font-size: 8vw;
+        }
+
+        .gameboard_cell_name {
+            text-align: center;
+            height: 2.5em;
+            font-size: 4vw;
+        }   
+
+        .teamscontainer {
+            height: 15% !important;
+            width: 90% !important;
+        }
+
+        .teams {
+            flex-direction: row !important;
+            height: 100% !important;
+        }
+
+        .team {
+            height: 80%;
+        }
+
+        .selected_cell_popover_content_objective_icon {
+            font-size: 32vw;
+        }
+
+        .selected_cell_popover_content_objective_name {
+            font-size: 8vw;
+        }
+
+        .selected_cell_popover_content_objective_description {
+            font-size: 3vw;
+        }
+
+        .selected_cell_popover_content_buttons button {
+            font-size: 3vw;
+        }
+
+        .selected_cell_popover_content_claimedby {
+            font-size: 3vw;
+        }
     }
 
 </style>
