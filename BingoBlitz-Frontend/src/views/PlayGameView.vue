@@ -98,6 +98,7 @@
 </script>
 
 <template>
+    <!--A popup that shows whenever a cell is selected, to show more detailed information and allow the user to claim it.-->
     <div class="selected_cell_popover" v-if="selectedCell">
         <div class="selected_cell_popover_content">
             <div class="selected_cell_popover_content_objective">
@@ -116,6 +117,7 @@
         </div>
     </div>
 
+    <!--The game board, with each cell represented-->
     <div class="gamecontainer">
         <div class="game">
             <div class="gameboard">
@@ -132,7 +134,7 @@
             </div>
         </div>
 
-        <div class="teamscontainer">
+        <!-- <div class="teamscontainer">
             <div class="teams">
                 <p class="above_teams_text">You are on team <b v-bind:style="{ color: teams[playerTeam].color }">{{ teams[playerTeam].name }}</b></p>
                 <p class="above_teams_text">Click any team below to switch teams.</p>
@@ -140,7 +142,7 @@
                     <div class="team_name">{{ team.name }}</div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 </template>
 
