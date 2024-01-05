@@ -12,12 +12,12 @@
 
     const teams = [
         { name: 'placeholder', color: 'placeholder'},
-        { name: 'Red', color: '#ff0000'},
-        { name: 'Blue', color: '#0000ff'},
-        { name: 'Green', color: '#00ff00'},
-        { name: 'Yellow', color: '#ffff00'},
-        { name: 'Orange', color: '#ffa500'},
-        { name: 'Pink', color: '#ffc0cb'},
+        { name: 'Red', color: '#ff0000', players: [] as string[]},
+        { name: 'Blue', color: '#0000ff', players: [] as string[] },
+        { name: 'Green', color: '#00ff00', players: [] as string[] },
+        { name: 'Yellow', color: '#ffff00', players: [] as string[] },
+        { name: 'Orange', color: '#ffa500', players: [] as string[] },
+        { name: 'Pink', color: '#ffc0cb', players: [] as string[] },
     ];
 
     //temporary for testing, these values will be retrieved from the server later
@@ -25,18 +25,18 @@
         [
             { objective: { name: 'Obtain a cup of coffee', description: 'Hold any cup/mug with coffee in it.', thumbnailEmoji: '☕' }, claimedBy: null },
             { objective: { name: 'High-five 10 people', description: 'High-five 10 different people.', thumbnailEmoji: '👏' }, claimedBy: null },
-            { objective: { name: 'Throw away some trash', description: 'Throw any piece of trash into a trashcan.', thumbnailEmoji: '🚮' }, claimedBy: null }
+            { objective: { name: 'Throw away some trash', description: 'Throw any piece of trash into a trashcan.', thumbnailEmoji: '🚮' }, claimedBy: null },
         ],
         [
             { objective: { name: 'Touch an animal', description: 'Touch any living animal. Humans and insects do not count.', thumbnailEmoji: '🐶' }, claimedBy: null },
             { objective: { name: 'Get a vehicle to honk', description: 'Make any vehicle honk their horn. Honking a horn yourself does not count.', thumbnailEmoji: '📣' }, claimedBy: null },
-            { objective: { name: 'Climb a tree', description: 'Climb any tree. You need to be atleast half a meter of the ground.', thumbnailEmoji: '🌲' }, claimedBy: null }
+            { objective: { name: 'Climb a tree', description: 'Climb any tree. You need to be atleast half a meter of the ground.', thumbnailEmoji: '🌲' }, claimedBy: null },
         ],
         [
             { objective: { name: 'Do a bottle flip', description: 'Flip any bottle and make it land.', thumbnailEmoji: '🍾' }, claimedBy: null },
             { objective: { name: 'Spin 25 circles on a chair', description: 'Spin 25 circles on an office chair', thumbnailEmoji: '🪑' }, claimedBy: null },
-            { objective: { name: 'Climb 50 steps', description: 'Climb 50 steps on any stairs. You may not count the same stair twice.', thumbnailEmoji: '📶' }, claimedBy: null }
-        ]
+            { objective: { name: 'Climb 50 steps', description: 'Climb 50 steps on any stairs. You may not count the same stair twice.', thumbnailEmoji: '📶' }, claimedBy: null },
+        ],
     ];
 
     const gameId = useRoute().params.id as string;
@@ -119,22 +119,16 @@
 
     <!--The game board, with each cell represented-->
     <div class="gamecontainer">
-        <div class="game">
-            <div class="gameboard">
-                <div class="gameboard_row" v-for="row in gameState.items">
-                    <div class="gameboard_cell" v-for="cell in row" v-bind:style="{ backgroundColor: teams[cell.claimedBy || -1]?.color ?? '' }">
-                        <div class="gameboard_cell_content" @click="SelectCell(cell)">
-                            <div class="gameboard_cell_content__objective">
-                                <div class="gameboard_cell_content_objective_icon">{{ cell.objective.thumbnailEmoji }}</div>
-                                <div class="gameboard_cell_content_objective_name">{{ cell.objective.name }}</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <table class="gameboard">
+            <tr class="gameboard_row" v-for="row in gameState.items">
+                <td class="gameboard_cell" @click="SelectCell(cell)" v-for="cell in row" v-bind:style="{ backgroundColor: teams[cell.claimedBy || -1]?.color ?? '' }">
+                    <div class="gameboard_cell_icon">{{ cell.objective.thumbnailEmoji }}</div>
+                    <div class="gameboard_cell_name">{{ cell.objective.name }}</div>
+                </td>
+            </tr>
+        </table>
 
-        <!-- <div class="teamscontainer">
+        <div class="teamscontainer">
             <div class="teams">
                 <p class="above_teams_text">You are on team <b v-bind:style="{ color: teams[playerTeam].color }">{{ teams[playerTeam].name }}</b></p>
                 <p class="above_teams_text">Click any team below to switch teams.</p>
@@ -142,85 +136,59 @@
                     <div class="team_name">{{ team.name }}</div>
                 </div>
             </div>
-        </div> -->
+        </div>
     </div>
 </template>
 
 <style scoped>
     .gamecontainer {
         display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 90%;
+        height: 100%;
         width: 100%;
-    }
-
-    .game {
-        display: flex;
-        flex-direction: column;
         justify-content: center;
-        align-items: center;
-        height: 80vh;
-        width: 80vw;
-        background-color: var(--dark);
-        border-radius: 20px;
     }
 
     .gameboard {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: 100%;
-        width: 100%;
-    }
-
-    .gameboard_row {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        height: 100%;
-        width: 100%;
+        border-radius: 20px;
+        max-width: 90vw;
+        max-height: 90vh;
+        width: 90vh;
+        height: 90vw;
+        margin: auto;
+        border-collapse: collapse;
+        table-layout: fixed;
     }
 
     .gameboard_cell {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: 100%;
-        width: 100%;
         border: 1px solid var(--light);
-    }
-
-    .gameboard_cell_content {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: 100%;
-        width: 100%;
-    }
-
-    .gameboard_cell_content__objective {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: 100%;
-        width: 100%;
-    }
-
-    .gameboard_cell_content_objective_icon {
-        font-size: 6vw;
-        text-align: center;
-    }
-
-    .gameboard_cell_content_objective_name {
-        font-size: 2vw;
         text-align: center;
         color: white;
+    }
+
+    .gameboard_cell_icon {
+        text-align: center;
+        font-size: 8vh;
+    }
+
+    .gameboard_cell_name {
+        text-align: center;
+        height: 2.5em;
+        font-size: 4vh;
+        overflow: hidden;
+        color: black;
+    }
+
+    @media (orientation: portrait) {
+        .gameboard_cell_icon {
+            text-align: center;
+            font-size: 8vw;
+        }
+
+        .gameboard_cell_name {
+            text-align: center;
+            height: 2.5em;
+            font-size: 4vw;
+        }   
     }
 
     .teamscontainer {
