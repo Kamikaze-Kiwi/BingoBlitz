@@ -19,6 +19,8 @@ services:
     image: gameserver
     networks:
     - bingoblitz-network
+    env_file:
+    - ./BingoBlitz-GameServer/GameServerAPI/.env
     labels:
       kompose.service.type: LoadBalancer
       kompose.image-pull-policy: "Never"

@@ -1,6 +1,11 @@
 using BingoBlitz_GameService;
+using IO.Ably;
+using DotNetEnv.Configuration;
+using Microsoft.AspNetCore.DataProtection.KeyManagement;
 
 var builder = WebApplication.CreateBuilder(args);
+DotNetEnv.Env.Load();
+builder.Configuration.AddDotNetEnv();
 
 // Add services to the container.
 
@@ -39,5 +44,9 @@ void ConfigureServices(IServiceCollection services)
             hostName: rabbitMQ.GetValue<string>("HostName"),
             port: rabbitMQ.GetValue<int>("Port")
         );
+    });
+    services.AddScoped<AblyRest>(provider =>
+    {
+        return new AblyRest(builder.Configuration.GetValue<string>("ABLY_API_KEY"));
     });
 }
