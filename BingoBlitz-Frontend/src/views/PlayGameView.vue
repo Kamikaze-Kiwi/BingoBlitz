@@ -5,6 +5,7 @@
     import type GameState from '@/types/gameState';
     import type GameStateItem from '@/types/gameStateItem';
     import { GameStateUpdateType, type GameStateUpdate } from '@/types/gameStateUpdate';
+    const gameServerEndpoint = import.meta.env.VITE_GAMESERVER_API as string;
 
     let gameState = ref({} as GameState);
     let selectedCell = ref({} as GameStateItem | null);
@@ -43,7 +44,7 @@
     const gameId = useRoute().params.id as string;
     let playerTeam = ref(1); 
 
-    const ably = new Ably.Realtime.Promise('QSaqKA.ItBuuQ:qp_nN-UeqeNF4GG4zzrhr-0iSOTkON2EZCZpBqpbCsQ');
+    const ably = new Ably.Realtime.Promise({ authUrl: gameServerEndpoint + 'game/ablyToken' });
     const channel = ably.channels.get('game.' + gameId);
 
     channel.subscribe('gamestate', (message: any) => {
