@@ -1,16 +1,20 @@
 <script setup lang="ts">
+  import router from '@/router';
   import axios from 'axios';
   const gameServerEndpoint = import.meta.env.VITE_GAMESERVER_API as string;
 
   function JoinGame(){
     let code: string = (document.getElementById("JoinGameIdInput") as HTMLInputElement).value;
-    axios.post<string>(gameServerEndpoint + 'game/join?gameId=' + code)
-      .then(response => {
-        alert(response.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-    })
+
+    router.push({ name: 'playgame', params: { id: code } });
+
+    // axios.post<string>(gameServerEndpoint + 'game/join?gameId=' + code)
+    //   .then(response => {
+    //     alert(response.data);
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    // })
   }
 </script>
 

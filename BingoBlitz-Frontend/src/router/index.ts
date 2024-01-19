@@ -6,6 +6,9 @@ import CommunityHubView from '../views/CommunityHubView.vue'
 import CreateObjectiveCollectionView from '../views/CreateObjectiveCollectionView.vue'
 import ProfileView from '../views/ProfileView.vue'
 import NotFoundView from '../views/NotFoundView.vue'
+import PlayGameView from '../views/PlayGameView.vue'
+import ProfileSettingsViewVue from '@/views/ProfileSettingsView.vue';
+import TermsAndConditionsView from '@/views/TermsAndConditionsView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -31,6 +34,22 @@ const router = createRouter({
       name: 'profile',
       component: ProfileView,
       beforeEnter: authGuard
+    },
+    {
+      path: '/Profile/Settings',
+      name: 'profilesettings',
+      component: ProfileSettingsViewVue,
+      beforeEnter: authGuard
+    },
+    {
+      path: '/playgame/:id',
+      name: 'playgame',
+      component: PlayGameView,
+    },
+    {
+      path: '/termsandconditions',
+      name: 'termsandconditions',
+      component: TermsAndConditionsView,
     },
     {
       path: '/:catchAll(.*)',
