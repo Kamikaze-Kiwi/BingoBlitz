@@ -5,7 +5,13 @@
     import type GameState from '@/types/gameState';
     import type GameStateItem from '@/types/gameStateItem';
     import { GameStateUpdateType, type GameStateUpdate } from '@/types/gameStateUpdate';
+    import { useAuth0 } from '@auth0/auth0-vue';
+    const { isLoading, user, isAuthenticated, loginWithPopup } = useAuth0();
     const gameServerEndpoint = import.meta.env.VITE_GAMESERVER_API as string;
+
+    let userName = ref('');
+
+    function SetNameAnonymous() { userName.value = (document.getElementById('anonnameinput') as HTMLInputElement).value; }
 
     let gameState = ref({} as GameState);
     let selectedCell = ref({} as GameStateItem | null);
@@ -123,7 +129,7 @@
     </div>
 
     <!--The game board, with each cell represented-->
-    <div class="gamecontainer">
+    <div class="gamecontainer" v-if="userName">
         <table class="gameboard">
             <tr class="gameboard_row" v-for="row in gameState.items">
                 <td class="gameboard_cell" @click="SelectCell(cell)" v-for="cell in row" v-bind:style="{ backgroundColor: teams[cell.claimedBy || -1]?.color ?? '' }">
@@ -143,9 +149,42 @@
             </div>
         </div>
     </div>
+
+    <div class="PlayerSelectionDialog" v-else>
+        <div v-if="isAuthenticated">
+            <div v-if="isLoading">
+                Loading...
+            </div>
+            <div v-else>
+                <a>You will join this game as {{ user?.name }}. This name will be seen by all other players, and will also be shown in their gamehistory.</a>
+                <br/>
+                <button @click="userName = user?.name ?? ''">Join game as {{ user?.name }}</button>
+            </div>
+        </div>
+        <div v-else>
+            <a>You are currently not logged in. To continue, please choose either of the following 2 options:</a>
+            <br/>
+            <br/>
+            <button @click="() => loginWithPopup()">Log in</button>
+            <hr style="background-color: black;"/>
+            <br/>
+            <input id="anonnameinput" style="margin-right: 2%;" type="text" placeholder="Enter your name here"/>
+            <br/>
+            <a>Note that this name will be seen by all other players, and will also be shown in their gamehistory. You will not be able to see it in your own history as you are playing without an account.</a>
+            <br/>
+            <button @click="SetNameAnonymous">Play without account</button>
+        </div>
+    </div>
 </template>
 
 <style scoped>
+    .PlayerSelectionDialog {
+        margin: auto; 
+        background-color: var(--glaucous);
+        border-radius: 20px;
+        padding: 20px;
+    }
+
     .gamecontainer {
         display: flex;
         height: 100%;
