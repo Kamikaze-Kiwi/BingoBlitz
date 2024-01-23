@@ -10,6 +10,8 @@
   let items = ref([] as ObjectiveCollection[]);
   let continuationToken : string | null = null;
   let hasMoreItems = ref(false);
+  let hasLoaded = ref(false);
+  let detailedItem = ref(null as ObjectiveCollection|null);
 
   GetItems();
 
@@ -20,12 +22,17 @@
     GetItems();
   }
 
+  function ShowDetails(item: ObjectiveCollection) {
+    GetItemDetails(item);
+    detailedItem.value = item;
+  }
+
   function GetItems() {
     axios.get<IterableObjectiveCollectionData>(communityHubEndpoint + 'objectives/collections/getqueryable', {
       params: {
         continuationToken: continuationToken,
         filter: filter.value,
-        count: 10
+        count: 5
       }
     })
       .then(response => {
@@ -39,6 +46,22 @@
         continuationToken = response.data.continuationToken;
 
         hasMoreItems.value = (continuationToken != null);
+      })
+      .catch(function (error) {
+      console.log(error);
+    }).finally(() => {
+      hasLoaded.value = true;
+    });
+  }
+
+  function GetItemDetails(item: ObjectiveCollection) {
+    if (item.objectives != null && item.objectives.length > 0) {
+      return;
+    }
+
+    axios.get<ObjectiveCollection>(communityHubEndpoint + 'objectives/collections/getbyid?id=' + item.id)
+      .then(response => {
+        item.objectives = response.data.objectives;
       })
       .catch(function (error) {
       console.log(error);
@@ -64,12 +87,21 @@
         <a class="objectiveCount"> {{ item.objectiveCount }} objectives </a>
         <hr>
         <div class="buttonDrawer">
-          <button>View details</button>
+          <button v-if="detailedItem !== item" @click="ShowDetails(item)">View details</button>
+          <button v-else @click="detailedItem = null">Hide details</button>
           <button>Create lobby</button>
+        </div>
+        <div v-if="detailedItem === item" class="itemDetails">
+          <ul>
+            <li v-for="objective in item.objectives">
+              {{ objective.thumbnailEmoji + '|' + objective.name }}
+            </li>
+          </ul>
         </div>
       </div>
     </div>
-    <button v-if="hasMoreItems" @click="GetItems">Load more</button>
+    <h3 v-if="!hasLoaded">Loading items...</h3>
+    <button v-else-if="hasMoreItems" @click="GetItems">Load more</button>
     <h3 v-else>Reached bottom of results...</h3>
   </div>
 </template>
